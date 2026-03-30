@@ -130,7 +130,7 @@ generate_commands() {
 
     # Apply other substitutions
 
-    body=$(printf '%s\n' "$body" | sed "s/{ARGS}/$arg_format/g" | sed "s/__AGENT__/$agent/g" | rewrite_paths)
+    body=$(printf '%s\n' "$body" | sed "s/{ARGS}/$arg_format/g" | sed "s/__AGENT__/$agent/g" )
 
     case $ext in
 
@@ -138,15 +138,15 @@ generate_commands() {
 
         body=$(printf '%s\n' "$body" | sed 's/\\/\\\\/g')
 
-        { echo "description = \"$description\""; echo; echo "prompt = \"\"\""; echo "$body"; echo "\"\"\""; } > "$output_dir/speckit.$name.$ext" ;;
+        { echo "description = \"$description\""; echo; echo "prompt = \"\"\""; echo "$body"; echo "\"\"\""; } > "$output_dir/$name.$ext" ;;
 
       md)
 
-        echo "$body" > "$output_dir/speckit.$name.$ext" ;;
+        echo "$body" > "$output_dir/$name.$ext" ;;
 
       agent.md)
 
-        echo "$body" > "$output_dir/speckit.$name.$ext" ;;
+        echo "$body" > "$output_dir/$name.$ext" ;;
 
     esac
 
@@ -159,7 +159,7 @@ generate_copilot_prompts() {
   mkdir -p "$prompts_dir"
 
   # Generate a .prompt.md file for each .agent.md file
-  for agent_file in "$agents_dir"/speckit.*.agent.md; do
+  for agent_file in "$agents_dir"/*.agent.md; do
     [[ -f "$agent_file" ]] || continue
 
     local basename=$(basename "$agent_file" .agent.md)
@@ -210,6 +210,9 @@ build_variant() {
           [[ -f "$script_file" ]] && cp "$script_file" "$SPEC_DIR/scripts/"
         done 2>/dev/null || true
 
+        # Copy templates/scripts content to .specify/scripts
+        [[ -d templates/scripts ]] && { cp -a templates/scripts/. "$SPEC_DIR/scripts/"; echo "Copied templates/scripts -> .specify/scripts"; }
+
         ;;
 
       ps)
@@ -221,6 +224,9 @@ build_variant() {
         for script_file in scripts/*; do
           [[ -f "$script_file" ]] && cp "$script_file" "$SPEC_DIR/scripts/"
         done 2>/dev/null || true
+
+        # Copy templates/scripts content to .specify/scripts
+        [[ -d templates/scripts ]] && { cp -a templates/scripts/. "$SPEC_DIR/scripts/"; echo "Copied templates/scripts -> .specify/scripts"; }
 
         ;;
 
@@ -274,7 +280,37 @@ build_variant() {
 
       mkdir -p "$base_dir/.claude/commands"
 
-      generate_commands claude md "\$ARGUMENTS" "$base_dir/.claude/commands" "$script" ;;
+      generate_commands claude md "\$ARGUMENTS" "$base_dir/.claude/commands" "$script"
+
+      # Copy ECC components for Claude
+      if [[ -d ecc-components/agents ]]; then
+        mkdir -p "$base_dir/.claude/agents"
+        cp ecc-components/agents/*.md "$base_dir/.claude/agents/"
+        echo "Copied ECC agents -> .claude/agents"
+      fi
+
+      if [[ -d ecc-components/commands ]]; then
+        cp ecc-components/commands/*.md "$base_dir/.claude/commands/"
+        echo "Copied ECC commands -> .claude/commands"
+      fi
+
+      if [[ -d ecc-components/skills ]]; then
+        mkdir -p "$base_dir/.claude/skills"
+        cp -r ecc-components/skills/* "$base_dir/.claude/skills/"
+        echo "Copied ECC skills -> .claude/skills"
+      fi
+
+      if [[ -d ecc-components/rules ]]; then
+        mkdir -p "$base_dir/.claude/rules"
+        cp -r ecc-components/rules/* "$base_dir/.claude/rules/"
+        echo "Copied ECC rules -> .claude/rules"
+      fi
+
+      if [[ -f ecc-components/hooks/hooks.json ]]; then
+        cp ecc-components/hooks/hooks.json "$base_dir/.claude/hooks-example.json"
+        echo "Copied ECC hooks example -> .claude/hooks-example.json"
+      fi
+      ;;
 
     gemini)
 
@@ -322,13 +358,51 @@ build_variant() {
 
       mkdir -p "$base_dir/.windsurf/workflows"
 
-      generate_commands windsurf md "\$ARGUMENTS" "$base_dir/.windsurf/workflows" "$script" ;;
+      generate_commands windsurf md "\$ARGUMENTS" "$base_dir/.windsurf/workflows" "$script"
+
+      # Copy ECC components for Windsurf
+      if [[ -d ecc-components/commands ]]; then
+        cp ecc-components/commands/*.md "$base_dir/.windsurf/workflows/"
+        echo "Copied ECC commands -> .windsurf/workflows"
+      fi
+
+      if [[ -d ecc-components/skills ]]; then
+        mkdir -p "$base_dir/.windsurf/skills"
+        cp -r ecc-components/skills/* "$base_dir/.windsurf/skills/"
+        echo "Copied ECC skills -> .windsurf/skills"
+      fi
+
+      if [[ -d ecc-components/rules ]]; then
+        mkdir -p "$base_dir/.windsurf/rules"
+        cp -r ecc-components/rules/* "$base_dir/.windsurf/rules/"
+        echo "Copied ECC rules -> .windsurf/rules"
+      fi
+      ;;
 
     codex)
 
       mkdir -p "$base_dir/.codex/prompts"
 
-      generate_commands codex md "\$ARGUMENTS" "$base_dir/.codex/prompts" "$script" ;;
+      generate_commands codex md "\$ARGUMENTS" "$base_dir/.codex/prompts" "$script"
+
+      # Copy ECC components for Codex
+      if [[ -d ecc-components/commands ]]; then
+        cp ecc-components/commands/*.md "$base_dir/.codex/prompts/"
+        echo "Copied ECC commands -> .codex/prompts"
+      fi
+
+      if [[ -d ecc-components/skills ]]; then
+        mkdir -p "$base_dir/.codex/skills"
+        cp -r ecc-components/skills/* "$base_dir/.codex/skills/"
+        echo "Copied ECC skills -> .codex/skills"
+      fi
+
+      if [[ -d ecc-components/rules ]]; then
+        mkdir -p "$base_dir/.codex/rules"
+        cp -r ecc-components/rules/* "$base_dir/.codex/rules/"
+        echo "Copied ECC rules -> .codex/rules"
+      fi
+      ;;
 
     kilocode)
 

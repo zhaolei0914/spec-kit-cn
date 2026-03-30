@@ -154,3 +154,36 @@ EOF
 check_file() { [[ -f "$1" ]] && echo "  ✓ $2" || echo "  ✗ $2"; }
 check_dir() { [[ -d "$1" && -n $(ls -A "$1" 2>/dev/null) ]] && echo "  ✓ $2" || echo "  ✗ $2"; }
 
+# 设置需求 ID，支持通过参数传递
+set_feature_id() {
+    local feature_id="$1"
+    if [[ -n "$feature_id" ]]; then
+        export SPECIFY_FEATURE="$feature_id"
+    fi
+}
+
+# 验证需求 ID 是否存在
+validate_feature_exists() {
+    local repo_root="$1"
+    local feature_id="$2"
+    local specs_dir="$repo_root/specs"
+
+    # 检查精确匹配
+    if [[ -d "$specs_dir/$feature_id" ]]; then
+        echo "$specs_dir/$feature_id"
+        return 0
+    fi
+
+    # 检查前缀匹配（如 001 匹配 001-user-auth）
+    if [[ "$feature_id" =~ ^[0-9]{3}$ ]]; then
+        for dir in "$specs_dir"/"$feature_id"-*; do
+            if [[ -d "$dir" ]]; then
+                echo "$dir"
+                return 0
+            fi
+        done
+    fi
+
+    return 1
+}
+

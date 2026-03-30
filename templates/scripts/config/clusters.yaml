@@ -1,0 +1,84 @@
+# 聚类关键词配置
+# 用于将代码模式分类到不同的规范聚类
+
+# 格式：
+# cluster_name:
+#   - keyword1
+#   - keyword2
+
+models:
+  - Model
+  - BaseModel
+  - models
+  - Entity
+  - Schema
+  - Table
+
+web:
+  - View
+  - formatting
+  - authenticated
+  - route
+  - api
+  - Controller
+  - endpoint
+  - request
+  - response
+
+service:
+  - Service
+  - transaction
+  - atomic
+  - Manager
+  - Business
+  - Logic
+
+error:
+  - Exception
+  - Error
+  - errorcode
+  - Fault
+  - Failure
+
+config:
+  - config
+  - settings
+  - Config
+  - appconfig
+  - Settings
+  - Configuration
+
+handler:
+  - Handler
+  - Worker
+  - Processor
+  - Task
+  - Job
+  - Consumer
+
+test:
+  - test
+  - Test
+  - mock
+  - Mock
+  - fixture
+  - pytest
+
+common:
+  - Common
+  - utils
+  - func
+  - thrift
+  - etcd
+  - i18n
+  - Util
+  - Helper
+
+constants:
+  - constants
+  - CHOICES
+  - Status
+  - Type
+  - Level
+  - Enum
+  - Constant

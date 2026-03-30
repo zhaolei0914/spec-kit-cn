@@ -128,6 +128,10 @@ generate_commands() {
 
 ')
 
+    # Rewrite paths for packaged output (scripts/ -> .specify/scripts/, etc.)
+
+    body=$(printf '%s\n' "$body" | rewrite_paths)
+
     # Apply other substitutions
 
     body=$(printf '%s\n' "$body" | sed "s/{ARGS}/$arg_format/g" | sed "s/__AGENT__/$agent/g" )
@@ -192,6 +196,8 @@ build_variant() {
 
   [[ -d memory ]] && { cp -r memory "$SPEC_DIR/"; echo "Copied memory -> .specify"; }
 
+  [[ -d .specify/harness ]] && { cp -r .specify/harness "$SPEC_DIR/"; echo "Copied .specify/harness -> .specify/harness"; }
+
   # Only copy the relevant script variant directory
 
   if [[ -d scripts ]]; then
@@ -203,6 +209,8 @@ build_variant() {
       sh)
 
         [[ -d scripts/bash ]] && { cp -r scripts/bash "$SPEC_DIR/scripts/"; echo "Copied scripts/bash -> .specify/scripts"; }
+
+        [[ -d scripts/harness ]] && { cp -r scripts/harness "$SPEC_DIR/scripts/"; echo "Copied scripts/harness -> .specify/scripts"; }
 
         # Copy any script files that aren't in variant-specific directories
 
@@ -218,6 +226,8 @@ build_variant() {
       ps)
 
         [[ -d scripts/powershell ]] && { cp -r scripts/powershell "$SPEC_DIR/scripts/"; echo "Copied scripts/powershell -> .specify/scripts"; }
+
+        [[ -d scripts/harness ]] && { cp -r scripts/harness "$SPEC_DIR/scripts/"; echo "Copied scripts/harness -> .specify/scripts"; }
 
         # Copy any script files that aren't in variant-specific directories
 

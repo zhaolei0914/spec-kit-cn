@@ -1,0 +1,126 @@
+# ============================================================
+# Harness Engineering 配置中心
+# 版本: 2.0
+# 参考: ECC Hook Runtime + OAC Context System + GSD Profile
+# ============================================================
+
+harness:
+  version: "2.0"
+  project_name: ""
+
+# === Profile 系统 (参考 GSD/OAC) ===
+profile: "standard"  # minimal | standard | strict
+profiles:
+  minimal:
+    quality_gates: { min_coverage: 70, max_clarifications: 5, self_healing_rounds: 2 }
+    security: { enabled: false }
+    observability: { execution_log: true, quality_metrics: false, audit_log: false }
+  standard:
+    quality_gates: { min_coverage: 85, max_clarifications: 3, self_healing_rounds: 3 }
+    security: { enabled: true, scan_on_commit: true }
+    observability: { execution_log: true, quality_metrics: true, audit_log: true }
+  strict:
+    quality_gates: { min_coverage: 95, max_clarifications: 1, self_healing_rounds: 5 }
+    security: { enabled: true, scan_on_commit: true, block_on_critical: true }
+    observability: { execution_log: true, quality_metrics: true, audit_log: true }
+
+# === Hook Runtime 控制 (参考 ECC) ===
+hooks:
+  profile: "standard"  # minimal | standard | strict
+  disabled: []         # 禁用特定 Hook, 如 ["security-scan", "lint"]
+
+# === 工作流编排 (参考 GSD) ===
+orchestration:
+  auto_advance: true             # 核心开关: 启用全自动推进
+  mode: "auto"                   # auto | guided
+  parallel_execution: true       # 允许并行任务 (如 /6 中的独立任务)
+  require_approval: true         # 写操作需审批
+  commit_strategy: "atomic"      # atomic | phase | milestone
+  branch_strategy: "phase"       # none | phase | milestone
+
+  # 人工确认策略
+  approval:
+    ambiguity_resolution: "auto-infer"   # auto-infer | always-ask
+    architecture_decisions: "ask"         # ask | auto (新技术栈时)
+    quality_gate_bypass: "ask"           # ask | block | skip
+    security_critical: "block"           # block (永远阻塞)
+    manual_tests: "ask"                  # ask | skip
+
+  # 自愈配置
+  self_healing:
+    spec_rounds: 3           # 制品自愈最大轮次
+    code_rounds: 3           # 代码自愈最大轮次
+    test_fix_rounds: 3       # 测试修复最大轮次
+    escalation: "human"      # human | abort | skip
+
+  # 自动推进超时
+  timeouts:
+    per_phase_minutes: 30    # 单阶段超时
+    total_minutes: 240       # 全流程超时
+    human_wait_minutes: 0    # 0=无限等待人工
+
+  # 澄清策略
+  clarification:
+    max_rounds: 5            # 最大澄清轮次
+    auto_infer: true         # 尝试自动推断模糊项
+    infer_confidence: 0.8    # 自动推断置信度阈值
+    record_inferences: true  # 记录所有自动推断到 audit-log
+
+  # Agent 调度策略 (根据 IDE 自动检测或手动指定)
+  dispatch:
+    strategy: "auto"    # auto | subagent | session-split | single
+    # auto:          自动检测 IDE 能力，选择最优策略
+    # subagent:      强制使用子 Agent 模式 (需 IDE 支持)
+    # session-split: 强制分段执行 (适用于所有 IDE)
+    # single:        强制单会话执行 (不推荐，仅用于小需求)
+
+  # 子 Agent 配置 (Level 3 IDE: Cursor / Claude Code)
+  subagent:
+    dispatch_dir: ".specify/harness/dispatch/"  # 调度文件目录
+    poll_interval_seconds: 5     # 轮询完成信号间隔
+    timeout_minutes: 30          # 单子流程超时
+    max_parallel: 1              # 最大并行子流程数 (1=串行)
+
+  # 分段执行配置 (Level 1 IDE: Windsurf)
+  session_split:
+    session_budget_tokens: 60000
+    pause_threshold: 0.7
+    phase_groups:
+      - ["/1", "/2"]
+      - ["/3", "/4", "/5"]
+      - ["/6"]
+      - ["/8", "/9", "/10", "/11"]
+    code_phase_task_limit: 8
+    auto_pause_message: true       # 自动输出暂停指引
+    auto_resume_on_start: true     # 新会话自动检测并恢复
+
+  # 通用上下文管理
+  context:
+    file_only: true                # 上下文仅通过文件传递
+    context_fence: true            # 启用上下文围栏
+    back_pressure: true            # 启用 Back-Pressure 输出
+    mvi_loading: true              # 最小可用信息加载
+
+# === 安全 (参考 ECC AgentShield + GSD) ===
+security:
+  sensitive_patterns:
+    - '(password|secret|api_key|token)\s*[:=]\s*["\x27][^"\x27]{8,}'
+    - 'BEGIN.*PRIVATE KEY'
+    - 'AKIA[0-9A-Z]{16}'
+  dangerous_commands: ["rm -rf /", "DROP TABLE", "DROP DATABASE"]
+  file_access:
+    allow: ["specs/", "src/", ".specify/", ".windsurf/"]
+    deny: [".env", ".env.*", "**/*.pem", "**/*.key"]
+
+# === 可观测性 ===
+observability:
+  execution_log: { max_entries: 100 }
+  quality_metrics: { update_on: ["/9", "/11"] }
+  audit_log: { retention_days: 90 }
+
+# === 持续学习 (参考 ECC CL-v2) ===
+learning:
+  enabled: true
+  instinct_confidence_threshold: 0.7
+  max_instincts: 50
+  auto_evolve: false

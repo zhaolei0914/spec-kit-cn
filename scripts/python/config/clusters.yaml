@@ -1,0 +1,101 @@
+# 聚类规则配置
+# 用于将代码模式分组到不同的规范文档中
+#
+# 格式:
+#   cluster_name:
+#     keywords: [关键词列表]
+#     description: 描述
+#
+# 匹配规则: 模式的 pattern_key 包含任意关键词时，归入该聚类
+
+models:
+  keywords:
+    - Model
+    - BaseModel
+    - models
+    - Entity
+    - Schema
+    - Field
+  description: 数据模型规范
+
+web:
+  keywords:
+    - View
+    - Controller
+    - formatting
+    - authenticated
+    - route
+    - endpoint
+    - api
+    - request
+    - response
+  description: Web 接口规范
+
+service:
+  keywords:
+    - Service
+    - transaction
+    - atomic
+    - Manager
+    - business
+  description: 服务层规范
+
+error:
+  keywords:
+    - Exception
+    - Error
+    - errorcode
+    - error_code
+    - raise
+  description: 错误处理规范
+
+config:
+  keywords:
+    - config
+    - settings
+    - Config
+    - Settings
+    - etcd
+    - appconfig
+  description: 配置规范
+
+handler:
+  keywords:
+    - Handler
+    - Worker
+    - Task
+    - Processor
+    - Command
+    - cron
+  description: 处理器规范
+
+test:
+  keywords:
+    - test
+    - Test
+    - mock
+    - Mock
+    - TestCase
+    - unittest
+  description: 测试规范
+
+common:
+  keywords:
+    - Common
+    - utils
+    - func
+    - thrift
+    - i18n
+    - helper
+  description: 公共库规范
+
+constants:
+  keywords:
+    - constants
+    - CHOICES
+    - Status
+    - Type
+    - Level
+    - Enum
+    - enum
+  description: 常量定义规范

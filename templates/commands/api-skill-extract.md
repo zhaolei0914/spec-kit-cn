@@ -10,7 +10,7 @@ $ARGUMENTS
 
 **参数说明**（均为可选）：
 - 第一个参数：服务源码目录（可选，自动检测 `src/` 下的服务目录）
-- `--output` 或 `-o`：输出目录（可选，默认 `.windsurf/skills/api-external/`）
+- `--output` 或 `-o`：输出目录（可选，默认 `__AGENT_SKILLS_DIR__/api-external/`）
 - `--service-name`：服务名称（可选，自动检测）
 - `--base-url`：API 基础路径（可选，自动检测）
 
@@ -65,7 +65,7 @@ python .specify/scripts/python/main.py api-skill \
 ```
 
 **默认值**：
-- `OUTPUT_DIR`：`.windsurf/skills/api-external/`
+- `OUTPUT_DIR`：`__AGENT_SKILLS_DIR__/api-external/`
 
 **可选参数**：
 - 如果用户指定了服务名称：添加 `--service-name "{SERVICE_NAME}"`
@@ -156,7 +156,7 @@ API Skill 主文档，包含：
 ### 指定输出目录
 
 ```
-/api-skill-extract src/v7tov8Service --output .windsurf/skills/upgrade-api/
+/api-skill-extract src/v7tov8Service --output __AGENT_SKILLS_DIR__/upgrade-api/
 ```
 
 ### 指定服务名称
@@ -173,7 +173,7 @@ API Skill 主文档，包含：
 
 ```
 请帮我调用 v7tov8Service 的"查看作业列表"接口，
-参考 .windsurf/skills/api-external/SKILL.md
+参考 __AGENT_SKILLS_DIR__/api-external/SKILL.md
 ```
 
 AI 将自动读取 API Skill 并生成符合规范的调用代码。

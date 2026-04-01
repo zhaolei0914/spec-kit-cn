@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from extractor.libcst import KnowledgeBase, KnowledgeBaseFusion
 from generator.skill_generator import SkillGenerator
-from generator.windsurf_generator import WindsurfGenerator
+from generator.windsurf_generator import AgentRulesGenerator, AGENT_RULES_MAP
 
 
 class TestSkillGenerator(unittest.TestCase):
@@ -100,8 +100,8 @@ class CustomError(Exception):
             self.assertIn("User", content)
 
 
-class TestWindsurfGenerator(unittest.TestCase):
-    """测试 Windsurf 生成器"""
+class TestAgentRulesGenerator(unittest.TestCase):
+    """测试 Agent 项目规则生成器"""
     
     def setUp(self):
         """设置测试环境"""
@@ -126,26 +126,42 @@ class User(models.Model):
         with open(os.path.join(self.test_dir, "models.py"), "w") as f:
             f.write(code)
     
-    def test_generate_windsurfrules(self):
-        """测试生成 .windsurfrules"""
-        generator = WindsurfGenerator({"project_root": self.test_dir})
-        content = generator.generate_windsurfrules(self.kb, ".specify/skills")
+    def test_generate_rules(self):
+        """测试生成项目规则文件内容"""
+        generator = AgentRulesGenerator({"project_root": self.test_dir})
+        content = generator.generate_rules(self.kb, ".specify/skills")
         
         self.assertIn("项目规则", content)
         self.assertIn("开发前置", content)
         self.assertIn("SKILL.md", content)
     
-    def test_generate_all(self):
+    def test_generate_all_windsurf(self):
         """测试生成所有 Windsurf 文件"""
-        generator = WindsurfGenerator({"project_root": self.test_dir})
-        files = generator.generate_all(self.kb, ".specify/skills", self.test_dir)
+        generator = AgentRulesGenerator({"project_root": self.test_dir})
+        files = generator.generate_all(self.kb, ".specify/skills", self.test_dir, agent_type='windsurf')
         
         self.assertIn(".windsurfrules", files)
-        self.assertIn("windsurf_rules.md", files)
+        self.assertIn("agent_rules.md", files)
         self.assertIn("constitution.md", files)
         
         # 验证文件存在
         self.assertTrue(os.path.exists(os.path.join(self.test_dir, ".windsurfrules")))
+
+    def test_generate_all_claude(self):
+        """测试生成 Claude 项目规则文件"""
+        generator = AgentRulesGenerator({"project_root": self.test_dir})
+        files = generator.generate_all(self.kb, ".specify/skills", self.test_dir, agent_type='claude')
+        
+        self.assertIn("CLAUDE.md", files)
+        self.assertTrue(os.path.exists(os.path.join(self.test_dir, "CLAUDE.md")))
+
+    def test_generate_all_cursor(self):
+        """测试生成 Cursor 项目规则文件"""
+        generator = AgentRulesGenerator({"project_root": self.test_dir})
+        files = generator.generate_all(self.kb, ".specify/skills", self.test_dir, agent_type='cursor-agent')
+        
+        self.assertIn(".cursorrules", files)
+        self.assertTrue(os.path.exists(os.path.join(self.test_dir, ".cursorrules")))
 
 
 class TestIntegration(unittest.TestCase):
@@ -236,13 +252,13 @@ class PermissionDeniedError(Exception):
         
         self.assertIn("SKILL.md", skill_files)
         
-        # 3. 生成 Windsurf 集成
-        windsurf_generator = WindsurfGenerator({"project_root": self.test_dir})
-        windsurf_files = windsurf_generator.generate_all(
-            kb, ".specify/skills", self.test_dir
+        # 3. 生成 Agent 项目规则
+        rules_generator = AgentRulesGenerator({"project_root": self.test_dir})
+        agent_files = rules_generator.generate_all(
+            kb, ".specify/skills", self.test_dir, agent_type='windsurf'
         )
         
-        self.assertIn(".windsurfrules", windsurf_files)
+        self.assertIn(".windsurfrules", agent_files)
         
         # 4. 验证生成的文件
         self.assertTrue(os.path.exists(os.path.join(skill_output, "SKILL.md")))

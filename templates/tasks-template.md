@@ -8,7 +8,7 @@ description: "功能实现任务列表模板"
 
 | 文档 | 路径 | 提取内容 |
 |------|------|----------|
-| **项目规范** | `.windsurf/skills/project-context/SKILL.md` | 技术栈、编码规范、项目章程 |
+| **项目规范** | `__AGENT_SKILLS_DIR__/project-context/SKILL.md` | 技术栈、编码规范、项目章程 |
 | **功能规范** | `specs/[ID]/spec.md` | 用户故事(P1/P2/P3)、功能需求(FR-xxx)、非功能需求(NFR-xxx) |
 | **开发设计** | `specs/[ID]/design.md` | 数据库设计、接口设计、功能流程、假设与前提 |
 

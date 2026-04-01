@@ -21,7 +21,7 @@ $ARGUMENTS: `<REQ-ID> [描述]`
 
 #### 步骤 2: 创建检查点
 
-运行 `scripts/harness/snapshot.sh <REQ-ID> <描述>`:
+运行 `PATH="/usr/local/bin:/usr/bin:/bin:$PATH" bash scripts/harness/snapshot.sh <REQ-ID> <描述>`:
 - 创建 Git tag: `harness/ckpt/[REQ-ID]/[timestamp]_[描述]`
 - 更新 `.specify/harness/snapshots/snapshot-index.md`
 

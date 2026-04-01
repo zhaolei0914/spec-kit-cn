@@ -5,7 +5,7 @@
 用法:
     python skill_main.py analyze <project_path> [--output <output_dir>]
     python skill_main.py generate <knowledge_file> [--output <output_dir>]
-    python skill_main.py all <project_path> [--output <output_dir>] [--windsurf]
+    python skill_main.py all <project_path> [--output <output_dir>] [--agent <agent_type>]
 """
 import os
 import sys
@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from extractor.libcst import KnowledgeBase, KnowledgeBaseFusion
 from generator.skill_generator import SkillGenerator
-from generator.windsurf_generator import WindsurfGenerator
+from generator.windsurf_generator import AgentRulesGenerator, AGENT_RULES_MAP
 from validator import SkillValidator, ConflictDetector
 
 
@@ -86,24 +86,24 @@ def generate_skills(args):
     return output_dir
 
 
-def generate_windsurf(args, kb: KnowledgeBase, skills_dir: str):
-    """生成 Windsurf 集成文件"""
-    print(f"[INFO] 生成 Windsurf 集成文件...")
+def generate_agent_rules(args, kb: KnowledgeBase, skills_dir: str, agent_type: str):
+    """生成 Agent 项目规则文件"""
+    print(f"[INFO] 生成 {agent_type} 项目规则文件...")
 
-    generator = WindsurfGenerator({'project_root': args.project_path})
+    generator = AgentRulesGenerator({'project_root': args.project_path})
 
     # 计算相对路径
     rel_skills_dir = os.path.relpath(skills_dir, args.project_path)
 
-    generated_files = generator.generate_all(kb, rel_skills_dir, args.project_path)
+    generated_files = generator.generate_all(kb, rel_skills_dir, args.project_path, agent_type=agent_type)
 
-    print(f"[INFO] Windsurf 文件已生成:")
+    print(f"[INFO] {agent_type} 文件已生成:")
     for filename, filepath in generated_files.items():
         print(f"  - {filename}")
 
 
 def run_all(args):
-    """执行完整流程：分析 + 生成 Skill + Windsurf 集成"""
+    """执行完整流程：分析 + 生成 Skill + Agent 项目规则"""
     print(f"[INFO] 开始完整流程: {args.project_path}")
     print(f"[INFO] 时间: {datetime.now().isoformat()}")
     print("")
@@ -157,19 +157,19 @@ def run_all(args):
         print(f"  - {filename}")
     print("")
 
-    # 3. 生成 Windsurf 集成（可选）
-    if args.windsurf:
+    # 3. 生成 Agent 项目规则（可选）
+    if args.agent:
         print("=" * 50)
-        print("步骤 3: 生成 Windsurf 集成")
+        print(f"步骤 3: 生成 {args.agent} 项目规则")
         print("=" * 50)
 
-        windsurf_generator = WindsurfGenerator({'project_root': args.project_path})
+        rules_generator = AgentRulesGenerator({'project_root': args.project_path})
         rel_skills_dir = os.path.relpath(output_dir, args.project_path)
 
-        windsurf_files = windsurf_generator.generate_all(kb, rel_skills_dir, args.project_path)
+        agent_files = rules_generator.generate_all(kb, rel_skills_dir, args.project_path, agent_type=args.agent)
 
-        print(f"[INFO] Windsurf 文件已生成:")
-        for filename in windsurf_files.keys():
+        print(f"[INFO] {args.agent} 文件已生成:")
+        for filename in agent_files.keys():
             print(f"  - {filename}")
         print("")
 
@@ -179,8 +179,9 @@ def run_all(args):
     print("=" * 50)
     print(f"[INFO] 知识库: {kb_path}")
     print(f"[INFO] Skill 目录: {output_dir}")
-    if args.windsurf:
-        print(f"[INFO] Windsurf 规则: {os.path.join(args.project_path, '.windsurfrules')}")
+    if args.agent:
+        rules_file = AGENT_RULES_MAP.get(args.agent, '.windsurfrules')
+        print(f"[INFO] 项目规则: {os.path.join(args.project_path, rules_file)}")
 
     if kb.errors:
         print(f"\n[WARN] 分析过程中有 {len(kb.errors)} 个错误，请检查知识库文件")
@@ -251,8 +252,8 @@ def main():
   # 根据知识库生成 Skill 文档
   python skill_main.py generate /path/to/knowledge.json
 
-  # 完整流程（分析 + 生成 + Windsurf 集成）
-  python skill_main.py all /path/to/project --windsurf
+  # 完整流程（分析 + 生成 + Agent 项目规则）
+  python skill_main.py all /path/to/project --agent windsurf
 
   # 验证 Skill 文档
   python skill_main.py validate /path/to/skills --check-conflicts
@@ -279,7 +280,7 @@ def main():
     all_parser.add_argument('project_path', help='项目路径')
     all_parser.add_argument('--output', '-o', help='Skill 输出目录')
     all_parser.add_argument('--exclude', help='排除的目录模式，逗号分隔')
-    all_parser.add_argument('--windsurf', action='store_true', help='生成 Windsurf 集成文件')
+    all_parser.add_argument('--agent', help='生成指定 Agent 的项目规则文件 (windsurf, cursor-agent, claude, gemini, copilot, qwen, opencode, codex, kilocode)')
     all_parser.add_argument('--max-examples', type=int, default=3, help='每个 Skill 的最大示例数')
     all_parser.add_argument('--max-lines', type=int, default=30, help='示例代码最大行数')
 

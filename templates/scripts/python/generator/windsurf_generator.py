@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Windsurf IDE 集成生成器
+Agent 项目规则生成器
 
-生成 Windsurf IDE 所需的配置文件
+为各 IDE/Agent 生成项目规则配置文件
+支持: windsurf, cursor-agent, claude, gemini, copilot, qwen, opencode, codex, kilocode
 """
 import os
 from typing import Dict, List, Optional
@@ -13,8 +14,22 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from extractor.libcst.knowledge_base import KnowledgeBase
 
 
-class WindsurfGenerator:
-    """Windsurf 集成生成器"""
+# Agent 项目规则文件路径映射
+AGENT_RULES_MAP = {
+    'windsurf':      '.windsurfrules',
+    'cursor-agent':  '.cursorrules',
+    'claude':        'CLAUDE.md',
+    'gemini':        'GEMINI.md',
+    'copilot':       '.github/copilot-instructions.md',
+    'qwen':          'QWEN.md',
+    'opencode':      'AGENTS.md',
+    'codex':         'AGENTS.md',
+    'kilocode':      '.kilocode/rules/project-rules.md',
+}
+
+
+class AgentRulesGenerator:
+    """通用 Agent 项目规则生成器"""
 
     def __init__(self, config: Optional[Dict] = None):
         """
@@ -30,15 +45,17 @@ class WindsurfGenerator:
         self,
         kb: KnowledgeBase,
         skills_dir: str,
-        project_root: Optional[str] = None
+        project_root: Optional[str] = None,
+        agent_type: str = 'windsurf'
     ) -> Dict[str, str]:
         """
-        生成所有 Windsurf 集成文件
+        生成所有 Agent 集成文件
 
         Args:
             kb: 知识库
             skills_dir: Skill 目录
             project_root: 项目根目录
+            agent_type: Agent 类型 (windsurf, cursor-agent, claude, ...)
 
         Returns:
             生成的文件路径字典
@@ -46,19 +63,20 @@ class WindsurfGenerator:
         project_root = project_root or self.project_root
         generated_files = {}
 
-        # 生成 .windsurfrules
-        rules_path = os.path.join(project_root, '.windsurfrules')
-        content = self.generate_windsurfrules(kb, skills_dir)
+        # 生成项目规则文件 (per-agent)
+        rules_filename = AGENT_RULES_MAP.get(agent_type, '.windsurfrules')
+        rules_path = os.path.join(project_root, rules_filename)
+        content = self.generate_rules(kb, skills_dir)
         self._write_file(rules_path, content)
-        generated_files['.windsurfrules'] = rules_path
+        generated_files[rules_filename] = rules_path
 
-        # 生成 windsurf_rules.md
+        # 生成 agent_rules.md
         ide_dir = os.path.join(project_root, '.specify', 'ide')
         os.makedirs(ide_dir, exist_ok=True)
-        rules_md_path = os.path.join(ide_dir, 'windsurf_rules.md')
-        content = self.generate_windsurf_rules_md(kb, skills_dir)
+        rules_md_path = os.path.join(ide_dir, 'agent_rules.md')
+        content = self.generate_rules_md(kb, skills_dir)
         self._write_file(rules_md_path, content)
-        generated_files['windsurf_rules.md'] = rules_md_path
+        generated_files['agent_rules.md'] = rules_md_path
 
         # 生成 constitution.md
         memory_dir = os.path.join(project_root, '.specify', 'memory')
@@ -70,8 +88,8 @@ class WindsurfGenerator:
 
         return generated_files
 
-    def generate_windsurfrules(self, kb: KnowledgeBase, skills_dir: str) -> str:
-        """生成 .windsurfrules 文件"""
+    def generate_rules(self, kb: KnowledgeBase, skills_dir: str) -> str:
+        """生成项目规则文件内容（适用于所有 Agent）"""
         lines = [
             f"# {kb.project_name} 项目规则",
             "",
@@ -113,10 +131,10 @@ class WindsurfGenerator:
 
         return "\n".join(lines)
 
-    def generate_windsurf_rules_md(self, kb: KnowledgeBase, skills_dir: str) -> str:
-        """生成 windsurf_rules.md 文件"""
+    def generate_rules_md(self, kb: KnowledgeBase, skills_dir: str) -> str:
+        """生成 agent_rules.md 文件"""
         lines = [
-            f"# {kb.project_name} IDE 规则",
+            f"# {kb.project_name} Agent 规则",
             "",
             f"**生成时间**: {datetime.now().isoformat()}",
             "",
@@ -242,3 +260,7 @@ class WindsurfGenerator:
         os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, 'w', encoding='utf-8') as f:
             f.write(content)
+
+
+# Backward-compatible alias
+WindsurfGenerator = AgentRulesGenerator

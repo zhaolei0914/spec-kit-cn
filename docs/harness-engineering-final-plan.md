@@ -667,7 +667,6 @@ description: "全自动需求交付: 从需求提交到归档，一键完成"
 |------|--------|------|
 | mode | auto | auto=全自动, guided=每阶段确认 |
 | profile | 从 config.yml | 覆盖 Harness profile |
-| skip-discuss | false | 跳过澄清阶段，使用推断默认值 |
 | dry-run | false | 仅生成计划，不执行代码 |
 ```
 

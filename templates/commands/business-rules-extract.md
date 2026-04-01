@@ -10,7 +10,7 @@ $ARGUMENTS
 
 **参数说明**（均为可选）：
 - 第一个参数：服务源码目录（可选，自动检测 `src/` 下的服务目录）
-- `--output` 或 `-o`：输出目录（可选，默认 `.windsurf/skills/business-rules/`）
+- `--output` 或 `-o`：输出目录（可选，默认 `__AGENT_SKILLS_DIR__/business-rules/`）
 
 ---
 
@@ -57,7 +57,7 @@ python .specify/scripts/python/main.py business-rules \
 ```
 
 **默认值**：
-- `OUTPUT_DIR`：`.windsurf/skills/business-rules/`
+- `OUTPUT_DIR`：`__AGENT_SKILLS_DIR__/business-rules/`
 
 ### 步骤 4：验证输出
 

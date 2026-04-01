@@ -3,7 +3,7 @@
 > **注意**：此模板已被 Agent Skills 动态生成方式替代。
 >
 > 新的项目上下文生成方式请参考：
-> - Workflow: `.windsurf/workflows/0-制定项目上下文与章程.md`
+> - Workflow: `/0-制定项目上下文` 命令
 > - 生成目录: `.specify/skills/project-context/`
 >
 > Skills 文件基于项目实际代码动态生成，不使用预置模板。

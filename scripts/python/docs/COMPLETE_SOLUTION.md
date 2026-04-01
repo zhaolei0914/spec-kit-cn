@@ -568,7 +568,7 @@ LLM 只填充模板，不自由发挥：
 | 模板填充引擎 | 数据驱动的 Skill 生成（纯模板，无 LLM） | 生成器代码 |
 | 验证管道 | 防幻觉验证 | 验证器代码 |
 | 核心 Skill | 生成 web, models, error, imports 等 | Skill 文件 |
-| Windsurf 集成 | 生成 .windsurfrules 和 memory 文件 | IDE 集成文件 |
+| Agent 集成 | 生成各 Agent 项目规则和 memory 文件 | Agent 集成文件 |
 
 ### 7.3 Phase 3: 动态加载 + 冲突检测（1 周）
 
@@ -1168,28 +1168,28 @@ llm:
 
 **结论**：默认模式（无 LLM）可生成完全可用的 Skill 文档，零成本，适合 CI/CD。
 
-### N. Windsurf IDE 集成
+### N. Agent 项目规则集成
 
 #### N.1 集成方式
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                        Windsurf 集成架构                               │
+│                   Agent 项目规则集成架构                            │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                         │
 │  Skill 生成器 ──▶ 输出文件                                              │
 │       │                                                                 │
-│       ├──▶ .windsurfrules          # Windsurf 全局规则                   │
+│       ├──▶ [Agent 规则文件]        # 如 .windsurfrules / CLAUDE.md     │
 │       │                                                                 │
-│       ├──▶ .specify/ide/windsurf_rules.md  # IDE 特定规则              │
+│       ├──▶ .specify/ide/agent_rules.md  # Agent 规则摘要               │
 │       │                                                                 │
 │       ├──▶ .specify/memory/         # Memory 文件                       │
 │       │   ├── constitution.md        # 项目章程                         │
 │       │   └── project_rules.md       # 项目规则                         │
 │       │                                                                 │
-│       └──▶ .windsurf/workflows/     # 工作流文件                       │
-│           ├── create-api.md          # 创建 API 工作流                  │
-│           ├── create-model.md        # 创建 Model 工作流                │
+│       └──▶ [Agent 命令目录]/        # 如 .windsurf/workflows/          │
+│           ├── 0-制定项目上下文.md   # SDD 命令模板                    │
+│           ├── 1-需求分析.md         # SDD 命令模板                    │
 │           └── ...                                                       │
 │                                                                         │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -1199,13 +1199,13 @@ llm:
 
 | 文件 | 用途 | 内容来源 |
 |------|------|----------|
-| **.windsurfrules** | Windsurf 全局规则 | 项目概述 + 核心规范 |
-| **windsurf_rules.md** | IDE 特定规则 | 开发前置要求 |
+| **[Agent 规则文件]** | Agent 全局规则 (如 .windsurfrules / CLAUDE.md / .cursorrules) | 项目概述 + 核心规范 |
+| **agent_rules.md** | Agent 规则摘要 | 开发前置要求 |
 | **constitution.md** | 项目章程 | 项目背景、技术栈、架构 |
 | **project_rules.md** | 项目规则 | 从 Skill 提取的核心规范 |
-| **workflows/*.md** | 工作流 | 基于 Skill 生成的操作指南 |
+| **[Agent 命令]/*.md** | SDD 命令模板 | 基于 Skill 生成的操作指南 |
 
-#### N.3 .windsurfrules 示例
+#### N.3 项目规则文件示例
 
 ```markdown
 # V7 到 V8 管理数据迁移服务 项目规则
@@ -1233,15 +1233,10 @@ llm:
 #### N.4 生成命令
 
 ```bash
-# 生成 Skill + Windsurf 集成文件
-python main.py generate-skills \
-    --knowledge ./cache/knowledge.json \
+# 生成 Skill + Agent 项目规则文件
+python skill_main.py all /path/to/project \
     --output ./skills/project-context/ \
-    --windsurf  # 生成 Windsurf 集成文件
-
-# 仅更新 Windsurf 文件（不重新分析）
-python main.py sync-windsurf \
-    --skills ./skills/project-context/
+    --agent windsurf  # 可选: windsurf, cursor-agent, claude, gemini, copilot, qwen, opencode, codex, kilocode
 ```
 
 ### H. 测试策略

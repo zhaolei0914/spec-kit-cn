@@ -50,7 +50,7 @@ HAS_REQ=false; HAS_SPEC=false; HAS_DESIGN=false; HAS_TASKS=false; HAS_CASE=false
 
 # 1. requirement.md → spec.md: 需求 ID 引用一致性
 if $HAS_REQ && $HAS_SPEC; then
-    REQ_IDS=$(grep -oE "REQ-[0-9]+" "${SPECS_DIR}/requirement.md" 2>/dev/null | sort -u)
+    REQ_IDS=$(grep -oE "REQ-[0-9]+" "${SPECS_DIR}/requirement.md" 2>/dev/null | sort -u || true)
     if [ -n "$REQ_IDS" ]; then
         for rid in $REQ_IDS; do
             if ! grep -q "$rid" "${SPECS_DIR}/spec.md" 2>/dev/null; then
@@ -62,9 +62,9 @@ fi
 
 # 2. spec.md → design.md: FR 覆盖检查
 if $HAS_SPEC && $HAS_DESIGN; then
-    FR_IN_SPEC=$(grep -oE "FR-[0-9]+" "${SPECS_DIR}/spec.md" 2>/dev/null | sort -u)
-    FR_IN_DESIGN=$(grep -oE "FR-[0-9]+" "${SPECS_DIR}/design.md" 2>/dev/null | sort -u)
-    
+    FR_IN_SPEC=$(grep -oE "FR-[0-9]+" "${SPECS_DIR}/spec.md" 2>/dev/null | sort -u || true)
+    FR_IN_DESIGN=$(grep -oE "FR-[0-9]+" "${SPECS_DIR}/design.md" 2>/dev/null | sort -u || true)
+
     if [ -n "$FR_IN_SPEC" ]; then
         MISSING_IN_DESIGN=$(comm -23 <(echo "$FR_IN_SPEC") <(echo "$FR_IN_DESIGN") 2>/dev/null)
         if [ -n "$MISSING_IN_DESIGN" ]; then
@@ -78,9 +78,9 @@ fi
 # 3. design.md → tasks.md: 设计要素覆盖
 if $HAS_DESIGN && $HAS_TASKS; then
     # 检查 design.md 中的接口/模块是否在 tasks.md 中有对应任务
-    DESIGN_MODULES=$(grep -oE "模块[：:]\s*\S+" "${SPECS_DIR}/design.md" 2>/dev/null | sort -u)
-    DESIGN_APIS=$(grep -oE "(GET|POST|PUT|DELETE|PATCH)\s+/\S+" "${SPECS_DIR}/design.md" 2>/dev/null | sort -u)
-    
+    DESIGN_MODULES=$(grep -oE "模块[：:]\s*\S+" "${SPECS_DIR}/design.md" 2>/dev/null | sort -u || true)
+    DESIGN_APIS=$(grep -oE "(GET|POST|PUT|DELETE|PATCH)\s+/\S+" "${SPECS_DIR}/design.md" 2>/dev/null | sort -u || true)
+
     if [ -n "$DESIGN_APIS" ]; then
         API_COUNT=$(echo "$DESIGN_APIS" | wc -l)
         TASKS_API_REF=$(grep -cE "(GET|POST|PUT|DELETE|PATCH)\s+/" "${SPECS_DIR}/tasks.md" 2>/dev/null || true)
@@ -92,9 +92,9 @@ fi
 
 # 4. spec.md → case.md: 用户故事覆盖
 if $HAS_SPEC && $HAS_CASE; then
-    US_IN_SPEC=$(grep -oE "US-[0-9]+" "${SPECS_DIR}/spec.md" 2>/dev/null | sort -u)
-    US_IN_CASE=$(grep -oE "US-[0-9]+" "${SPECS_DIR}/case.md" 2>/dev/null | sort -u)
-    
+    US_IN_SPEC=$(grep -oE "US-[0-9]+" "${SPECS_DIR}/spec.md" 2>/dev/null | sort -u || true)
+    US_IN_CASE=$(grep -oE "US-[0-9]+" "${SPECS_DIR}/case.md" 2>/dev/null | sort -u || true)
+
     if [ -n "$US_IN_SPEC" ]; then
         MISSING_IN_CASE=$(comm -23 <(echo "$US_IN_SPEC") <(echo "$US_IN_CASE") 2>/dev/null)
         if [ -n "$MISSING_IN_CASE" ]; then
@@ -108,9 +108,9 @@ fi
 # 5. tasks.md 内部: 任务依赖关系检查
 if $HAS_TASKS; then
     # 检查是否有引用了不存在的任务ID的依赖
-    TASK_IDS=$(grep -oE "T[0-9]{3}" "${SPECS_DIR}/tasks.md" 2>/dev/null | sort -u)
-    DEPS=$(grep -oE "依赖[：:]\s*T[0-9]{3}" "${SPECS_DIR}/tasks.md" 2>/dev/null | grep -oE "T[0-9]{3}" | sort -u)
-    
+    TASK_IDS=$(grep -oE "T[0-9]{3}" "${SPECS_DIR}/tasks.md" 2>/dev/null | sort -u || true)
+    DEPS=$(grep -oE "依赖[：:]\s*T[0-9]{3}" "${SPECS_DIR}/tasks.md" 2>/dev/null | grep -oE "T[0-9]{3}" | sort -u || true)
+
     if [ -n "$DEPS" ] && [ -n "$TASK_IDS" ]; then
         for dep in $DEPS; do
             if ! echo "$TASK_IDS" | grep -q "^${dep}$"; then
@@ -123,9 +123,9 @@ fi
 # 6. 术语一致性: 检查关键术语在各制品中是否一致使用
 if $HAS_SPEC && $HAS_DESIGN; then
     # 简单检查: 同一概念是否用了不同名称（基于引号中的术语）
-    SPEC_TERMS=$(grep -oE "「[^」]+」|"[^"]*"" "${SPECS_DIR}/spec.md" 2>/dev/null | sort -u | head -20)
+    SPEC_TERMS=$(grep -oE "「[^」]+」|\"[^\"]*\"" "${SPECS_DIR}/spec.md" 2>/dev/null | sort -u | head -20 || true)
     if [ -n "$SPEC_TERMS" ]; then
-        TERM_COUNT=$(echo "$SPEC_TERMS" | wc -l)
+        TERM_COUNT=$(echo "$SPEC_TERMS" | wc -l || true)
         if [ "$TERM_COUNT" -gt 0 ]; then
             # 仅作为信息提示，不扣分
             :

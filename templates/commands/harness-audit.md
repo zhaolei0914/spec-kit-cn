@@ -23,14 +23,14 @@ $ARGUMENTS: 需求 ID 或留空扫描全部活跃需求
 
 #### 步骤 1: 制品完整性扫描
 
-对每个目标需求运行 `scripts/harness/lint-specs.sh`:
+对每个目标需求运行 `PATH="/usr/local/bin:/usr/bin:/bin:$PATH" bash scripts/harness/lint-specs.sh`:
 - 检查必需文件是否存在
 - 检查必需章节是否完整
 - 记录评分 (0-20 分)
 
 #### 步骤 2: 跨制品一致性检查
 
-对每个目标需求运行 `scripts/harness/consistency-check.sh`:
+对每个目标需求运行 `PATH="/usr/local/bin:/usr/bin:/bin:$PATH" bash scripts/harness/consistency-check.sh`:
 - FR 追溯覆盖 (spec → design → tasks)
 - 术语一致性
 - 任务依赖完整性
@@ -38,7 +38,7 @@ $ARGUMENTS: 需求 ID 或留空扫描全部活跃需求
 
 #### 步骤 3: 安全扫描
 
-运行 `scripts/harness/security-scan.sh`:
+运行 `PATH="/usr/local/bin:/usr/bin:/bin:$PATH" bash scripts/harness/security-scan.sh`:
 - 敏感信息泄露检查
 - 危险命令检查
 - 环境文件检查
@@ -74,7 +74,7 @@ $ARGUMENTS: 需求 ID 或留空扫描全部活跃需求
 
 #### 步骤 7: 输出报告
 
-生成 `.specify/harness/audit-report.md`:
+生成 `specs/[REQ-ID]/audit-report.md`（每个需求独立一份）:
 
 ```markdown
 # Harness Audit 报告

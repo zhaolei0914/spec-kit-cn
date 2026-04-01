@@ -52,10 +52,62 @@ mkdir -p "$GENRELEASES_DIR"
 rm -rf "$GENRELEASES_DIR"/* || true
 
 rewrite_paths() {
+  # Only rewrite top-level paths (memory/, scripts/, templates/) that appear at
+  # the start of a path, not nested inside other paths like .../project-context/memory/.
+  # Match when preceded by: start-of-line, whitespace, backtick, quote, paren, or standalone /
   sed -E \
-    -e 's@(/?)memory/@.specify/memory/@g' \
-    -e 's@(/?)scripts/@.specify/scripts/@g' \
-    -e 's@(/?)templates/@.specify/templates/@g'
+    -e 's@(^|[[:space:]"`'\''(])(/?)memory/@\1.specify/memory/@g' \
+    -e 's@(^|[[:space:]"`'\''(])(/?)scripts/@\1.specify/scripts/@g' \
+    -e 's@(^|[[:space:]"`'\''(])(/?)templates/@\1.specify/templates/@g'
+}
+
+# Agent-specific path mappings for project rules, skills, and config directories
+agent_skills_dir() {
+  local agent=$1
+  case $agent in
+    claude)         echo ".claude/skills" ;;
+    windsurf)       echo ".windsurf/skills" ;;
+    cursor-agent)   echo ".cursor/skills" ;;
+    codex)          echo ".codex/skills" ;;
+    copilot)        echo ".github/skills" ;;
+    gemini)         echo ".gemini/skills" ;;
+    qwen)           echo ".qwen/skills" ;;
+    opencode)       echo ".opencode/skills" ;;
+    kilocode)       echo ".kilocode/skills" ;;
+    *)              echo ".specify/skills" ;;
+  esac
+}
+
+agent_rules_file() {
+  local agent=$1
+  case $agent in
+    claude)         echo "CLAUDE.md" ;;
+    windsurf)       echo ".windsurfrules" ;;
+    cursor-agent)   echo ".cursorrules" ;;
+    codex)          echo "AGENTS.md" ;;
+    copilot)        echo ".github/copilot-instructions.md" ;;
+    gemini)         echo "GEMINI.md" ;;
+    qwen)           echo "QWEN.md" ;;
+    opencode)       echo "AGENTS.md" ;;
+    kilocode)       echo ".kilocode/rules/project-rules.md" ;;
+    *)              echo ".windsurfrules" ;;
+  esac
+}
+
+agent_config_dir() {
+  local agent=$1
+  case $agent in
+    claude)         echo ".claude/" ;;
+    windsurf)       echo ".windsurf/" ;;
+    cursor-agent)   echo ".cursor/" ;;
+    codex)          echo ".codex/" ;;
+    copilot)        echo ".github/" ;;
+    gemini)         echo ".gemini/" ;;
+    qwen)           echo ".qwen/" ;;
+    opencode)       echo ".opencode/" ;;
+    kilocode)       echo ".kilocode/" ;;
+    *)              echo ".windsurf/" ;;
+  esac
 }
 
 generate_commands() {
@@ -134,7 +186,17 @@ generate_commands() {
 
     # Apply other substitutions
 
-    body=$(printf '%s\n' "$body" | sed "s/{ARGS}/$arg_format/g" | sed "s/__AGENT__/$agent/g" )
+    local skills_dir rules_file config_dir
+    skills_dir=$(agent_skills_dir "$agent")
+    rules_file=$(agent_rules_file "$agent")
+    config_dir=$(agent_config_dir "$agent")
+
+    body=$(printf '%s\n' "$body" | sed \
+      -e "s|{ARGS}|$arg_format|g" \
+      -e "s|__AGENT__|$agent|g" \
+      -e "s|__AGENT_SKILLS_DIR__|$skills_dir|g" \
+      -e "s|__AGENT_RULES_FILE__|$rules_file|g" \
+      -e "s|__AGENT_CONFIG_DIR__|$config_dir|g" )
 
     case $ext in
 
@@ -196,7 +258,7 @@ build_variant() {
 
   [[ -d memory ]] && { cp -r memory "$SPEC_DIR/"; echo "Copied memory -> .specify"; }
 
-  [[ -d .specify/harness ]] && { cp -r .specify/harness "$SPEC_DIR/"; echo "Copied .specify/harness -> .specify/harness"; }
+  [[ -d templates/harness ]] && { cp -r templates/harness "$SPEC_DIR/"; echo "Copied templates/harness -> .specify/harness"; }
 
   # Only copy the relevant script variant directory
 
@@ -244,7 +306,22 @@ build_variant() {
 
   fi
 
-  [[ -d templates ]] && { mkdir -p "$SPEC_DIR/templates"; find templates -type f -not -path "templates/commands/*" -not -name "vscode-settings.json" -exec cp --parents {} "$SPEC_DIR"/ \; 2>/dev/null || true; echo "Copied templates -> .specify/templates"; }
+  [[ -d templates ]] && { mkdir -p "$SPEC_DIR/templates"; find templates -type f -not -path "templates/commands/*" -not -path "templates/harness/*" -not -path "templates/cursor-agents/*" -not -name "vscode-settings.json" -exec cp --parents {} "$SPEC_DIR"/ \; 2>/dev/null || true; echo "Copied templates -> .specify/templates"; }
+
+  # Replace __AGENT_*__ placeholders in static template files (non-command templates)
+  local skills_dir rules_file config_dir
+  skills_dir=$(agent_skills_dir "$agent")
+  rules_file=$(agent_rules_file "$agent")
+  config_dir=$(agent_config_dir "$agent")
+
+  find "$SPEC_DIR/templates" -type f -name "*.md" 2>/dev/null | while read -r tpl_file; do
+    sed -i \
+      -e "s|__AGENT__|$agent|g" \
+      -e "s|__AGENT_SKILLS_DIR__|$skills_dir|g" \
+      -e "s|__AGENT_RULES_FILE__|$rules_file|g" \
+      -e "s|__AGENT_CONFIG_DIR__|$config_dir|g" \
+      "$tpl_file"
+  done
 
   # Inject variant into plan-template.md within .specify/templates if present
 
@@ -347,8 +424,15 @@ build_variant() {
     cursor-agent)
 
       mkdir -p "$base_dir/.cursor/commands"
+      mkdir -p "$base_dir/.cursor/agents"
 
-      generate_commands cursor-agent md "\$ARGUMENTS" "$base_dir/.cursor/commands" "$script" ;;
+      generate_commands cursor-agent md "\$ARGUMENTS" "$base_dir/.cursor/commands" "$script"
+
+      # Copy Cursor Subagent definitions for SDD phase delegation
+      if [[ -d templates/cursor-agents ]]; then
+        cp templates/cursor-agents/*.md "$base_dir/.cursor/agents/"
+        echo "Copied Cursor Subagents -> .cursor/agents"
+      fi ;;
 
     qwen)
 

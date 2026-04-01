@@ -110,7 +110,7 @@ fi
 # 7. FR 追溯检查 (spec → design → tasks)
 if $HAS_SPEC && $HAS_DESIGN; then
     # 提取 spec.md 中的 FR 编号
-    FR_LIST=$(grep -oE "FR-[0-9]+" "${SPECS_DIR}/spec.md" 2>/dev/null | sort -u)
+    FR_LIST=$(grep -oE "FR-[0-9]+" "${SPECS_DIR}/spec.md" 2>/dev/null | sort -u || true)
     if [ -n "$FR_LIST" ]; then
         for fr in $FR_LIST; do
             if ! grep -q "$fr" "${SPECS_DIR}/design.md" 2>/dev/null; then

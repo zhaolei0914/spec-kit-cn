@@ -62,34 +62,45 @@ orchestration:
   # 澄清策略
   clarification:
     max_rounds: 5            # 最大澄清轮次
-    auto_infer: true         # 尝试自动推断模糊项
-    infer_confidence: 0.8    # 自动推断置信度阈值
-    record_inferences: true  # 记录所有自动推断到 audit-log
+    auto_infer: false        # 需求澄清必须由用户回答，禁止自动推断
 
   # Agent 调度策略 (根据 IDE 自动检测或手动指定)
   dispatch:
-    strategy: "auto"    # auto | subagent | session-split | single
-    # auto:          自动检测 IDE 能力，选择最优策略
-    # subagent:      强制使用子 Agent 模式 (需 IDE 支持)
-    # session-split: 强制分段执行 (适用于所有 IDE)
-    # single:        强制单会话执行 (不推荐，仅用于小需求)
+    strategy: "auto"    # auto | cursor-subagent | subagent | session-split | single
+    # auto:              自动检测 IDE 能力，选择最优策略
+    # cursor-subagent:   强制使用 Cursor Subagents (Task 工具委派)
+    # subagent:          强制使用子 Agent 模式 (Claude Code Task)
+    # session-split:     强制分段执行 (适用于所有 IDE)
+    # single:            强制单会话执行 (不推荐，仅用于小需求)
 
-  # 子 Agent 配置 (Level 3 IDE: Cursor / Claude Code)
+  # 子 Agent 配置 (Level 3: Cursor Subagents / Claude Code Task)
   subagent:
     dispatch_dir: ".specify/harness/dispatch/"  # 调度文件目录
-    poll_interval_seconds: 5     # 轮询完成信号间隔
     timeout_minutes: 30          # 单子流程超时
     max_parallel: 1              # 最大并行子流程数 (1=串行)
+    cursor_subagents:
+      agents_dir: ".cursor/agents/"  # Subagent 定义文件目录
+      phase_mapping:                 # 阶段 → Subagent 角色映射（每个阶段独立一次 Task 调用）
+        "/1-需求分析": "sdd-ba"
+        "/2-需求规范": "sdd-ba"
+        "/3-开发设计": "sdd-architect"
+        "/4-实施步骤": "sdd-architect"
+        "/5-实施前检测": "sdd-architect"
+        "/6-编写代码": "sdd-developer"
+        "/8-生成测试用例": "sdd-qa"
+        "/9-测试验证": "sdd-qa"
+        "/10-同步文档": "sdd-docops"
+        "/11-归档需求": "sdd-docops"
 
   # 分段执行配置 (Level 1 IDE: Windsurf)
   session_split:
     session_budget_tokens: 60000
     pause_threshold: 0.7
     phase_groups:
-      - ["/1", "/2"]
-      - ["/3", "/4", "/5"]
-      - ["/6"]
-      - ["/8", "/9", "/10", "/11"]
+      - ["/1-需求分析", "/2-需求规范"]
+      - ["/3-开发设计", "/4-实施步骤", "/5-实施前检测"]
+      - ["/6-编写代码"]
+      - ["/8-生成测试用例", "/9-测试验证", "/10-同步文档", "/11-归档需求"]
     code_phase_task_limit: 8
     auto_pause_message: true       # 自动输出暂停指引
     auto_resume_on_start: true     # 新会话自动检测并恢复

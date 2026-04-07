@@ -260,50 +260,11 @@ build_variant() {
 
   [[ -d templates/harness ]] && { cp -r templates/harness "$SPEC_DIR/"; echo "Copied templates/harness -> .specify/harness"; }
 
-  # Only copy the relevant script variant directory
-
+  # Copy scripts directory
   if [[ -d scripts ]]; then
-
     mkdir -p "$SPEC_DIR/scripts"
-
-    case $script in
-
-      sh)
-
-        [[ -d scripts/bash ]] && { cp -r scripts/bash "$SPEC_DIR/scripts/"; echo "Copied scripts/bash -> .specify/scripts"; }
-
-        [[ -d scripts/harness ]] && { cp -r scripts/harness "$SPEC_DIR/scripts/"; echo "Copied scripts/harness -> .specify/scripts"; }
-
-        # Copy any script files that aren't in variant-specific directories
-
-        for script_file in scripts/*; do
-          [[ -f "$script_file" ]] && cp "$script_file" "$SPEC_DIR/scripts/"
-        done 2>/dev/null || true
-
-        # Copy templates/scripts content to .specify/scripts
-        [[ -d templates/scripts ]] && { cp -a templates/scripts/. "$SPEC_DIR/scripts/"; echo "Copied templates/scripts -> .specify/scripts"; }
-
-        ;;
-
-      ps)
-
-        [[ -d scripts/powershell ]] && { cp -r scripts/powershell "$SPEC_DIR/scripts/"; echo "Copied scripts/powershell -> .specify/scripts"; }
-
-        [[ -d scripts/harness ]] && { cp -r scripts/harness "$SPEC_DIR/scripts/"; echo "Copied scripts/harness -> .specify/scripts"; }
-
-        # Copy any script files that aren't in variant-specific directories
-
-        for script_file in scripts/*; do
-          [[ -f "$script_file" ]] && cp "$script_file" "$SPEC_DIR/scripts/"
-        done 2>/dev/null || true
-
-        # Copy templates/scripts content to .specify/scripts
-        [[ -d templates/scripts ]] && { cp -a templates/scripts/. "$SPEC_DIR/scripts/"; echo "Copied templates/scripts -> .specify/scripts"; }
-
-        ;;
-
-    esac
-
+    cp -r scripts/* "$SPEC_DIR/scripts/"
+    echo "Copied scripts/* -> .specify/scripts"
   fi
 
   [[ -d templates ]] && { mkdir -p "$SPEC_DIR/templates"; find templates -type f -not -path "templates/commands/*" -not -path "templates/harness/*" -not -path "templates/cursor-agents/*" -not -name "vscode-settings.json" -exec cp --parents {} "$SPEC_DIR"/ \; 2>/dev/null || true; echo "Copied templates -> .specify/templates"; }

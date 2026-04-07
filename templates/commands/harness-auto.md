@@ -39,7 +39,17 @@ description: "全自动需求交付引擎: 提交需求 → 自动完成全流�
 1. 读取 `.specify/harness/config.yml` → 加载编排配置
 2. **检查项目上下文是否已就绪**:
    - 检查 `__AGENT_SKILLS_DIR__/project-context/SKILL.md` 是否存在
-   - ❌ 不存在 → **停止初始化**，读取 `__AGENT_CONFIG_DIR__/commands/0-制定项目上下文.md` 命令模板，**完整执行其所有阶段**（代码扫描、SKILL 生成、记忆验证等），确认 SKILL.md 已生成后再回到步骤 3 继续。不得跳过或简化 `/0` 的任何步骤。
+   - ❌ 不存在 → **停止初始化**，提示用户必须先执行项目上下文初始化：
+     ```
+     ⚠️ 项目上下文未初始化
+
+     检测到 `__AGENT_SKILLS_DIR__/project-context/SKILL.md` 不存在。
+
+     请先执行以下命令完成项目上下文初始化：
+       /0-制定项目上下文
+
+     完成后再重新执行 /harness-auto
+     ```
    - ✅ 存在 → 继续
 3. 读取 `.specify/harness/state.md` → 检查是否有未完成的需求
    - 如有活跃的 auto 流程 → 提示是否继续或开始新需求

@@ -43,13 +43,6 @@ echo "版本: $VERSION"
 [[ -n "${SCRIPTS:-}" ]] && echo "Scripts: $SCRIPTS"
 echo ""
 
-# 打包前同步 templates/scripts -> scripts (打包脚本从 scripts/ 读取)
-if [[ -d "templates/scripts" ]]; then
-    mkdir -p scripts
-    cp -a templates/scripts/. scripts/
-    echo "已同步 templates/scripts -> scripts/"
-fi
-
 # 调用实际的构建脚本
 if [[ -f ".github/workflows/scripts/create-release-packages.sh" ]]; then
     bash .github/workflows/scripts/create-release-packages.sh "$VERSION"

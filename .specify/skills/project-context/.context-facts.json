@@ -1,0 +1,2113 @@
+{
+  "generated_at": "2026-04-02T13:24:33.536797",
+  "project_name": "specify-cn-cli",
+  "project_facts": {
+    "languages": {
+      "Python": 146,
+      "Shell/Bash": 32,
+      "PowerShell": 5
+    },
+    "frameworks": [],
+    "middleware": [],
+    "build_tools": [
+      "Python",
+      "Hatch",
+      "pip"
+    ],
+    "ci_cd": [
+      "GitHub Actions"
+    ],
+    "containerization": [
+      "Docker"
+    ],
+    "versions": {
+      "python": ">=3.11",
+      "node": null,
+      "java": null,
+      "go": null,
+      "project": "0.0.92"
+    }
+  },
+  "structure_facts": {
+    "dir_structure": {
+      "AGENTS.md": {
+        "type": "file",
+        "size": 21008
+      },
+      "CLAUDE.md": {
+        "type": "file",
+        "size": 6777
+      },
+      "ECC-INTEGRATION.md": {
+        "type": "file",
+        "size": 12198
+      },
+      "LICENSE": {
+        "type": "file",
+        "size": 1060
+      },
+      "build.sh": {
+        "type": "file",
+        "size": 2411
+      },
+      "docs": {
+        "type": "dir",
+        "files": 22
+      },
+      "ecc-components": {
+        "type": "dir",
+        "files": 325
+      },
+      "media": {
+        "type": "dir",
+        "files": 5
+      },
+      "memory": {
+        "type": "dir",
+        "files": 8
+      },
+      "pyproject.toml": {
+        "type": "file",
+        "size": 569
+      },
+      "scripts": {
+        "type": "dir",
+        "files": 146
+      },
+      "spec-driven.md": {
+        "type": "file",
+        "size": 20283
+      },
+      "src": {
+        "type": "dir",
+        "files": 2
+      },
+      "templates": {
+        "type": "dir",
+        "files": 190
+      }
+    },
+    "total_files": 601,
+    "config_files": [
+      "pyproject.toml"
+    ],
+    "env_files": [],
+    "architecture_hints": [
+      "CLI 工具 / 库",
+      "工具包 / 模板集"
+    ]
+  },
+  "code_patterns": {
+    "naming": {
+      "function_style": "snake_case",
+      "class_style": "PascalCase",
+      "file_style": "snake_case",
+      "function_examples": [
+        "get_key",
+        "select_with_arrows",
+        "show_banner",
+        "callback",
+        "run_command",
+        "check_tool",
+        "rewrite_paths",
+        "agent_skills_dir",
+        "agent_rules_file",
+        "agent_config_dir"
+      ],
+      "class_examples": [
+        "StepTracker",
+        "BannerGroup",
+        "ShellProjectPatterns",
+        "ShellSkillGenerator",
+        "ShellFunctionExtractor",
+        "class",
+        "ShellKnowledgeBaseFusion",
+        "ShellSourceExtractor",
+        "ShellVariableExtractor",
+        "ShellPatternMiner"
+      ]
+    },
+    "indentation": {
+      "style": "4-spaces",
+      "detail": "4 空格缩进"
+    },
+    "docstring_style": {
+      "style": "简单 docstring",
+      "all_styles": {
+        "Google": 23,
+        "简单 docstring": 112
+      }
+    },
+    "import_style": {
+      "style": "绝对导入为主，分组排列",
+      "grouped": true,
+      "absolute": 628,
+      "relative": 158,
+      "wildcard": 1
+    },
+    "anti_patterns": [
+      {
+        "type": "print_debug",
+        "count": 389,
+        "desc": "发现 389 处调试打印语句"
+      },
+      {
+        "type": "bare_except",
+        "count": 2,
+        "desc": "发现 2 处裸 except:"
+      }
+    ],
+    "architecture_hints": [
+      "CLI 工具 / 库",
+      "工具包 / 模板集"
+    ],
+    "logging_style": {
+      "primary": "print()",
+      "all": {
+        "console.*()": 1,
+        "print()": 30,
+        "logger.*()": 4,
+        "logging.*()": 5,
+        "fmt.Print*()": 1
+      }
+    },
+    "error_handling": {
+      "try/except": 226,
+      "raise": 33
+    },
+    "env_vars_in_code": [
+      "ACTIVE_END",
+      "ACTIVE_START",
+      "AGENTS",
+      "CLAUDE_CODE_ENTRYPOINT",
+      "CLAUDE_PROJECT_DIR",
+      "CLAUDE_SESSION_ID",
+      "CLAUDE_TRANSCRIPT_PATH",
+      "CLV2_CONFIG",
+      "CLV2_IS_WINDOWS",
+      "CLV2_OBSERVER_SENTINEL_FILE",
+      "CLV2_PYTHON_CMD",
+      "COMPACT_THRESHOLD",
+      "ECC_HOOK_PROFILE",
+      "ECC_OBSERVER_ALLOW_WINDOWS",
+      "ECC_OBSERVER_ANALYSIS_COOLDOWN",
+      "ECC_OBSERVER_MAX_ANALYSIS_LINES",
+      "ECC_OBSERVER_MAX_TURNS",
+      "ECC_OBSERVER_SIGNAL_EVERY_N",
+      "ECC_OBSERVER_TIMEOUT_SECONDS",
+      "ECC_OBSERVE_SKIP_PATHS",
+      "ECC_SKIP_OBSERVE",
+      "GH_TOKEN",
+      "GITHUB_TOKEN",
+      "GITNEXUS_IMAGE",
+      "HOOK_PHASE",
+      "OBSERVER_ACTIVE_HOURS_END",
+      "OBSERVER_ACTIVE_HOURS_START",
+      "OBSERVER_INTERVAL_SECONDS",
+      "OBSERVER_LAST_RUN_LOG",
+      "OBSERVER_MAX_IDLE_SECONDS",
+      "PROJECT_DIR",
+      "PROJECT_ID_ENV",
+      "PROJECT_NAME_ENV",
+      "PROJECT_ROOT",
+      "RESULTS_JSON",
+      "RULES_DISTILL_DIR",
+      "RULES_DISTILL_GLOBAL_DIR",
+      "RULES_DISTILL_PROJECT_DIR",
+      "SCRIPTS",
+      "SKILL_STOCKTAKE_GLOBAL_DIR",
+      "SKILL_STOCKTAKE_OBSERVATIONS",
+      "SKILL_STOCKTAKE_PROJECT_DIR",
+      "SPECIFY_FEATURE",
+      "TIMESTAMP",
+      "VERSION",
+      "VIDEODB_EVENTS_DIR",
+      "XDG_STATE_HOME",
+      "_raw",
+      "current_hhmm",
+      "exit_code",
+      "file_size_mb",
+      "last_spawn",
+      "remote_url",
+      "u30"
+    ],
+    "sample_count": 178
+  },
+  "code_graph": {
+    "meta": {
+      "files": 563,
+      "nodes": 11394,
+      "edges": 17912,
+      "communities": 208,
+      "processes": 300,
+      "embeddings": 0
+    },
+    "module_count": 15,
+    "modules": [
+      {
+        "name": "analyzer",
+        "stats": "294 symbols | 22 files | Cohesion: 88%",
+        "entry_points": [
+          {
+            "name": "cmd_analyze",
+            "type": "Function",
+            "file": "scripts/python/main.py",
+            "line": 36
+          },
+          {
+            "name": "cmd_analyze",
+            "type": "Function",
+            "file": "templates/scripts/python/main.py",
+            "line": 36
+          },
+          {
+            "name": "parse_file",
+            "type": "Function",
+            "file": "scripts/python/parser/base.py",
+            "line": 104
+          },
+          {
+            "name": "get_file_extensions",
+            "type": "Function",
+            "file": "scripts/python/parser/base.py",
+            "line": 127
+          },
+          {
+            "name": "parse_directory",
+            "type": "Function",
+            "file": "scripts/python/parser/base.py",
+            "line": 136
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "scripts/python/analyzer/knowledge_extractor.py",
+            "symbols": "KnowledgeExtractor, extract_all, _build_knowledge_base, extract_knowledge, ModelField (+21)"
+          },
+          {
+            "file": "templates/scripts/python/analyzer/knowledge_extractor.py",
+            "symbols": "ModelField, ModelDefinition, _extract_models, _extract_model_fields, _get_field_type (+21)"
+          },
+          {
+            "file": "scripts/python/analyzer/api_extractor.py",
+            "symbols": "ApiExtractor, extract_api, ApiParameter, ApiEndpoint, _analyze_route (+19)"
+          },
+          {
+            "file": "templates/scripts/python/analyzer/api_extractor.py",
+            "symbols": "ApiParameter, _extract_parameters, _extract_function_parameters, _get_type_annotation, _get_call_string (+19)"
+          },
+          {
+            "file": "scripts/python/analyzer/entry_analyzer.py",
+            "symbols": "EntryAnalyzer, get_entries_summary, analyze_entries, EntryPoint, FunctionCall (+18)"
+          },
+          {
+            "file": "templates/scripts/python/analyzer/entry_analyzer.py",
+            "symbols": "FunctionCall, BusinessCondition, StateChange, BusinessFlow, _analyze_entry (+18)"
+          },
+          {
+            "file": "scripts/python/analyzer/antipattern_detector.py",
+            "symbols": "Violation, _detect_file, _detect_code_pattern, _detect_ast_pattern, _detect_print_calls (+17)"
+          },
+          {
+            "file": "templates/scripts/python/analyzer/antipattern_detector.py",
+            "symbols": "Violation, _detect_file, _detect_code_pattern, _detect_ast_pattern, _detect_print_calls (+17)"
+          },
+          {
+            "file": "scripts/python/analyzer/url_route_extractor.py",
+            "symbols": "UrlRoute, _parse_route_file, _parse_django_routes, _parse_django_handler, _convert_django_path (+10)"
+          },
+          {
+            "file": "templates/scripts/python/analyzer/url_route_extractor.py",
+            "symbols": "UrlRoute, _parse_route_file, _parse_django_routes, _parse_django_handler, _convert_django_path (+10)"
+          }
+        ],
+        "connected_areas": [
+          {
+            "area": "Area",
+            "connections": "Connections"
+          },
+          {
+            "area": "Miner",
+            "connections": "2 calls"
+          },
+          {
+            "area": "Generator",
+            "connections": "2 calls"
+          }
+        ],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Analyze_entries → _op_to_string`",
+            "type": "cross_community",
+            "steps": "7"
+          },
+          {
+            "flow": "`Detect_antipatterns → Violation`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Detect_antipatterns → _get_decorator_name`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Analyze_entries → _get_call_name`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Analyze_entries → FunctionCall`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Extract_knowledge → _get_field_type`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Extract_knowledge → _is_field_required`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Extract_knowledge → _get_field_constraints`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Extract_knowledge → _get_field_type`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Extract_knowledge → _is_field_required`",
+            "type": "cross_community",
+            "steps": "6"
+          }
+        ]
+      },
+      {
+        "name": "django",
+        "stats": "103 symbols | 11 files | Cohesion: 75%",
+        "entry_points": [
+          {
+            "name": "visit_ClassDef",
+            "type": "Function",
+            "file": "scripts/python/extractor/libcst/exception_extractor.py",
+            "line": 61
+          },
+          {
+            "name": "visit_FunctionDef",
+            "type": "Function",
+            "file": "scripts/python/extractor/libcst/django/view_extractor.py",
+            "line": 105
+          },
+          {
+            "name": "visit_FunctionDef",
+            "type": "Function",
+            "file": "templates/scripts/python/extractor/libcst/django/view_extractor.py",
+            "line": 105
+          },
+          {
+            "name": "visit_Assign",
+            "type": "Function",
+            "file": "scripts/python/extractor/libcst/django/url_extractor.py",
+            "line": 56
+          },
+          {
+            "name": "visit_AugAssign",
+            "type": "Function",
+            "file": "scripts/python/extractor/libcst/django/url_extractor.py",
+            "line": 66
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/django/view_extractor.py",
+            "symbols": "visit_FunctionDef, _extract_function_view, _extract_http_method, _extract_action_method, _get_decorators (+13)"
+          },
+          {
+            "file": "templates/scripts/python/extractor/libcst/django/view_extractor.py",
+            "symbols": "visit_FunctionDef, _extract_function_view, _extract_http_method, _extract_action_method, _get_decorators (+13)"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/django/model_extractor.py",
+            "symbols": "visit_ClassDef, _get_location, _extract_meta, _parse_meta_class, _extract_methods (+8)"
+          },
+          {
+            "file": "templates/scripts/python/extractor/libcst/django/model_extractor.py",
+            "symbols": "visit_ClassDef, _get_location, _extract_meta, _parse_meta_class, _extract_methods (+8)"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/django/url_extractor.py",
+            "symbols": "visit_Assign, visit_AugAssign, _extract_urlpatterns, _extract_url_pattern, _parse_url_args (+4)"
+          },
+          {
+            "file": "templates/scripts/python/extractor/libcst/django/url_extractor.py",
+            "symbols": "visit_Assign, visit_AugAssign, _extract_urlpatterns, _extract_url_pattern, _parse_url_args (+4)"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/django/middleware_extractor.py",
+            "symbols": "visit_ClassDef, _get_bases, _get_name, _has_middleware_methods, _extract_methods (+3)"
+          },
+          {
+            "file": "templates/scripts/python/extractor/libcst/django/middleware_extractor.py",
+            "symbols": "visit_ClassDef, _get_bases, _get_name, _has_middleware_methods, _extract_methods (+3)"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/exception_extractor.py",
+            "symbols": "visit_ClassDef, _extract_exception_attributes, _get_location_for_class"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/base_libcst.py",
+            "symbols": "CodeUnit, _get_docstring, _get_annotation_string"
+          }
+        ],
+        "connected_areas": [
+          {
+            "area": "Area",
+            "connections": "Connections"
+          },
+          {
+            "area": "Libcst",
+            "connections": "21 calls"
+          }
+        ],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Visit_FunctionDef → _get_annotation_string`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Visit_ClassDef → _get_name`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Visit_ClassDef → _extract_field_args`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Visit_ClassDef → _get_name`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Visit_ClassDef → _extract_field_args`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Visit_FunctionDef → _get_name`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Visit_FunctionDef → CodeLocation`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Visit_FunctionDef → _extract_string_value`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Visit_FunctionDef → _get_annotation_string`",
+            "type": "intra_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Visit_FunctionDef → _get_name`",
+            "type": "cross_community",
+            "steps": "4"
+          }
+        ]
+      },
+      {
+        "name": "extractor",
+        "stats": "114 symbols | 18 files | Cohesion: 88%",
+        "entry_points": [
+          {
+            "name": "extract",
+            "type": "Function",
+            "file": "scripts/shell/extractor/variable_extractor.py",
+            "line": 35
+          },
+          {
+            "name": "extract_all",
+            "type": "Function",
+            "file": "scripts/shell/extractor/variable_extractor.py",
+            "line": 118
+          },
+          {
+            "name": "extract",
+            "type": "Function",
+            "file": "scripts/shell/extractor/source_extractor.py",
+            "line": 23
+          },
+          {
+            "name": "extract_all",
+            "type": "Function",
+            "file": "scripts/shell/extractor/source_extractor.py",
+            "line": 56
+          },
+          {
+            "name": "extract",
+            "type": "Function",
+            "file": "scripts/shell/extractor/pattern_miner.py",
+            "line": 66
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "scripts/shell/extractor/function_extractor.py",
+            "symbols": "extract_all, ShellFunctionExtractor, extract, _match_function_start, _get_function_docstring (+4)"
+          },
+          {
+            "file": "templates/scripts/shell/extractor/function_extractor.py",
+            "symbols": "extract_all, ShellFunctionExtractor, extract, _match_function_start, _get_function_docstring (+4)"
+          },
+          {
+            "file": "scripts/python/extractor/fusion.py",
+            "symbols": "get_by_type, KnowledgeFusion, __init__, extract_all, add_items (+4)"
+          },
+          {
+            "file": "templates/scripts/python/extractor/fusion.py",
+            "symbols": "get_by_type, KnowledgeFusion, __init__, extract_all, add_items (+4)"
+          },
+          {
+            "file": "scripts/shell/extractor/base.py",
+            "symbols": "ShellVariable, ShellSource, ShellPattern, _find_shell_files, _read_file (+3)"
+          },
+          {
+            "file": "templates/scripts/shell/extractor/base.py",
+            "symbols": "ShellVariable, ShellSource, ShellPattern, _find_shell_files, _read_file (+3)"
+          },
+          {
+            "file": "scripts/shell/extractor/comment_extractor.py",
+            "symbols": "extract_all, ShellCommentExtractor, extract, _extract_header_comments, _extract_todo_comments (+2)"
+          },
+          {
+            "file": "templates/scripts/shell/extractor/comment_extractor.py",
+            "symbols": "extract_all, ShellCommentExtractor, extract, _extract_header_comments, _extract_todo_comments (+2)"
+          },
+          {
+            "file": "scripts/python/extractor/base.py",
+            "symbols": "from_dict, get, calculate_confidence, determine_priority, extract (+2)"
+          },
+          {
+            "file": "templates/scripts/python/extractor/base.py",
+            "symbols": "from_dict, get, calculate_confidence, determine_priority, extract (+2)"
+          }
+        ],
+        "connected_areas": [],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Extract_all → KnowledgeItem`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Extract_all → KnowledgeItem`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Main → ShellKnowledgeBase`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellFunctionExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellVariableExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellCommentExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellKnowledgeBase`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellFunctionExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellVariableExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellCommentExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          }
+        ]
+      },
+      {
+        "name": "generator",
+        "stats": "210 symbols | 11 files | Cohesion: 92%",
+        "entry_points": [
+          {
+            "name": "to_yaml_header",
+            "type": "Function",
+            "file": "scripts/python/generator/skill_generator.py",
+            "line": 33
+          },
+          {
+            "name": "get_import_for",
+            "type": "Function",
+            "file": "scripts/python/generator/skill_generator.py",
+            "line": 102
+          },
+          {
+            "name": "generate_all",
+            "type": "Function",
+            "file": "scripts/python/generator/skill_generator.py",
+            "line": 405
+          },
+          {
+            "name": "generate_project_overview",
+            "type": "Function",
+            "file": "scripts/python/generator/skill_generator.py",
+            "line": 530
+          },
+          {
+            "name": "generate_web_skill",
+            "type": "Function",
+            "file": "scripts/python/generator/skill_generator.py",
+            "line": 652
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "scripts/python/generator/skill_generator.py",
+            "symbols": "SkillMetadata, to_yaml_header, ProjectPatterns, get_import_for, generate_all (+30)"
+          },
+          {
+            "file": "templates/scripts/python/generator/skill_generator.py",
+            "symbols": "SkillMetadata, to_yaml_header, ProjectPatterns, get_import_for, generate_all (+30)"
+          },
+          {
+            "file": "templates/scripts/python/generator/project_context_generator.py",
+            "symbols": "_get_project_info, _get_cluster_patterns, _get_cluster_examples, _get_unit_statistics, _group_examples_by_service (+19)"
+          },
+          {
+            "file": "scripts/python/generator/project_context_generator.py",
+            "symbols": "_get_project_info, _get_cluster_patterns, _get_cluster_examples, _get_unit_statistics, _group_examples_by_service (+16)"
+          },
+          {
+            "file": "scripts/shell/generator/skill_generator.py",
+            "symbols": "__init__, _analyze, _analyze_function_naming, _analyze_variable_naming, _analyze_logging_functions (+16)"
+          },
+          {
+            "file": "templates/scripts/shell/generator/skill_generator.py",
+            "symbols": "__init__, _analyze, _analyze_function_naming, _analyze_variable_naming, _analyze_logging_functions (+16)"
+          },
+          {
+            "file": "templates/scripts/python/generator/api_skill_generator.py",
+            "symbols": "ApiSkillGenerator, generate, _detect_service_name, _detect_base_url, _group_by_module (+10)"
+          },
+          {
+            "file": "scripts/python/generator/api_skill_generator.py",
+            "symbols": "generate, _detect_service_name, _detect_base_url, _group_by_module, _normalize_module_name (+9)"
+          },
+          {
+            "file": "scripts/python/generator/cluster_doc_generator.py",
+            "symbols": "ClusterDocGenerator, generate_cluster_doc, _generate_pattern_tables, _generate_recommendations, _generate_examples_section (+4)"
+          },
+          {
+            "file": "templates/scripts/python/generator/cluster_doc_generator.py",
+            "symbols": "ClusterDocGenerator, generate_cluster_doc, _generate_pattern_tables, _generate_recommendations, _generate_examples_section (+4)"
+          }
+        ],
+        "connected_areas": [
+          {
+            "area": "Area",
+            "connections": "Connections"
+          },
+          {
+            "area": "Analyzer",
+            "connections": "1 calls"
+          }
+        ],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Main → _detect_service_name`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → _detect_service_name`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellProjectPatterns`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellProjectPatterns`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Cmd_api_skill → _normalize_module_name`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Cmd_api_skill → _generate_endpoint_id`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Cmd_api_skill → _get_common_errors`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Cmd_api_skill → _normalize_module_name`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Cmd_api_skill → _generate_endpoint_id`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Cmd_api_skill → _get_common_errors`",
+            "type": "cross_community",
+            "steps": "4"
+          }
+        ]
+      },
+      {
+        "name": "gitnexus",
+        "stats": "18 symbols | 1 files | Cohesion: 93%",
+        "entry_points": [
+          {
+            "name": "load_gitnexus_meta",
+            "type": "Function",
+            "file": "templates/scripts/docker/gitnexus/gitnexus_to_skill.py",
+            "line": 398
+          },
+          {
+            "name": "load_gitnexus_skills",
+            "type": "Function",
+            "file": "templates/scripts/docker/gitnexus/gitnexus_to_skill.py",
+            "line": 407
+          },
+          {
+            "name": "parse_skill_md",
+            "type": "Function",
+            "file": "templates/scripts/docker/gitnexus/gitnexus_to_skill.py",
+            "line": 428
+          },
+          {
+            "name": "generate_project_context_skill",
+            "type": "Function",
+            "file": "templates/scripts/docker/gitnexus/gitnexus_to_skill.py",
+            "line": 498
+          },
+          {
+            "name": "translate_to_chinese",
+            "type": "Function",
+            "file": "templates/scripts/docker/gitnexus/gitnexus_to_skill.py",
+            "line": 855
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "templates/scripts/docker/gitnexus/gitnexus_to_skill.py",
+            "symbols": "load_gitnexus_meta, load_gitnexus_skills, parse_skill_md, _store_table, generate_project_context_skill (+13)"
+          }
+        ],
+        "connected_areas": [
+          {
+            "area": "Area",
+            "connections": "Connections"
+          },
+          {
+            "area": "Scripts",
+            "connections": "1 calls"
+          }
+        ],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Main → _add_unique`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Main → _store_table`",
+            "type": "intra_community",
+            "steps": "5"
+          }
+        ]
+      },
+      {
+        "name": "libcst",
+        "stats": "234 symbols | 30 files | Cohesion: 84%",
+        "entry_points": [
+          {
+            "name": "visit_ClassDef",
+            "type": "Function",
+            "file": "templates/scripts/python/extractor/libcst/exception_extractor.py",
+            "line": 61
+          },
+          {
+            "name": "visit_Raise",
+            "type": "Function",
+            "file": "templates/scripts/python/extractor/libcst/exception_extractor.py",
+            "line": 119
+          },
+          {
+            "name": "visit_Try",
+            "type": "Function",
+            "file": "templates/scripts/python/extractor/libcst/exception_extractor.py",
+            "line": 164
+          },
+          {
+            "name": "extract_from_tree",
+            "type": "Function",
+            "file": "templates/scripts/python/extractor/libcst/comment_extractor.py",
+            "line": 31
+          },
+          {
+            "name": "setUp",
+            "type": "Function",
+            "file": "scripts/python/tests/test_extractors.py",
+            "line": 29
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "templates/scripts/python/extractor/libcst/knowledge_base.py",
+            "symbols": "__init__, _process_single_file, _fast_extract_all, _get_file_hash, KnowledgeBase (+19)"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/knowledge_base.py",
+            "symbols": "__init__, _process_single_file, _fast_extract_all, _get_file_hash, KnowledgeBase (+12)"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/function_extractor.py",
+            "symbols": "FunctionExtractor, visit_FunctionDef, _get_location, _get_decorators, _get_parameters (+10)"
+          },
+          {
+            "file": "templates/scripts/python/extractor/libcst/function_extractor.py",
+            "symbols": "FunctionExtractor, visit_FunctionDef, _get_location, _get_decorators, _get_parameters (+10)"
+          },
+          {
+            "file": "templates/scripts/python/extractor/libcst/exception_extractor.py",
+            "symbols": "visit_ClassDef, visit_Raise, visit_Try, _get_bases, _get_name (+9)"
+          },
+          {
+            "file": "templates/scripts/python/extractor/libcst/base_libcst.py",
+            "symbols": "CodeLocation, CodeUnit, LibCSTExtractor, _get_annotation_string, ExtractorResult (+8)"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/constant_extractor.py",
+            "symbols": "ConstantExtractor, visit_ClassDef, _extract_value, _get_location, _get_base_name (+8)"
+          },
+          {
+            "file": "templates/scripts/python/extractor/libcst/constant_extractor.py",
+            "symbols": "ConstantExtractor, visit_ClassDef, _extract_value, _get_location, _get_base_name (+8)"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/exception_extractor.py",
+            "symbols": "ExceptionExtractor, visit_Raise, visit_Try, _get_bases, _get_name (+6)"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/decorator_extractor.py",
+            "symbols": "DecoratorExtractor, visit_ClassDef, visit_FunctionDef, _extract_decorator_usage, _parse_decorator (+6)"
+          }
+        ],
+        "connected_areas": [
+          {
+            "area": "Area",
+            "connections": "Connections"
+          },
+          {
+            "area": "Django",
+            "connections": "21 calls"
+          }
+        ],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Run_all → Get_bases`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_decorators`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_docstring`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_node_source`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_bases`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_decorators`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_docstring`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_node_source`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Analyze_project → Get_bases`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Analyze_project → Get_decorators`",
+            "type": "cross_community",
+            "steps": "5"
+          }
+        ]
+      },
+      {
+        "name": "mcp",
+        "stats": "41 symbols | 5 files | Cohesion: 78%",
+        "entry_points": [
+          {
+            "name": "convert_pattern",
+            "type": "Function",
+            "file": "scripts/python/mcp/skill_converter.py",
+            "line": 37
+          },
+          {
+            "name": "get_id",
+            "type": "Function",
+            "file": "scripts/python/mcp/skill_schema.py",
+            "line": 100
+          },
+          {
+            "name": "to_dict",
+            "type": "Function",
+            "file": "scripts/python/mcp/skill_schema.py",
+            "line": 138
+          },
+          {
+            "name": "to_json",
+            "type": "Function",
+            "file": "scripts/python/mcp/skill_schema.py",
+            "line": 172
+          },
+          {
+            "name": "save_skills",
+            "type": "Function",
+            "file": "scripts/python/mcp/skill_schema.py",
+            "line": 205
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "scripts/python/mcp/skill_converter.py",
+            "symbols": "convert_pattern, _generate_skill_name, _generate_description, _determine_category, _generate_context_patterns (+6)"
+          },
+          {
+            "file": "templates/scripts/python/mcp/skill_converter.py",
+            "symbols": "convert_pattern, _generate_skill_name, _generate_description, _determine_category, _generate_context_patterns (+6)"
+          },
+          {
+            "file": "scripts/python/mcp/skill_schema.py",
+            "symbols": "Skill, get_id, to_dict, to_json, save_skills (+4)"
+          },
+          {
+            "file": "templates/scripts/python/mcp/skill_schema.py",
+            "symbols": "Skill, SkillParameter, SkillExample, SkillMetadata, from_dict (+4)"
+          },
+          {
+            "file": "scripts/python/parser/base.py",
+            "symbols": "load_patterns"
+          }
+        ],
+        "connected_areas": [],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Convert_patterns_to_skills → SkillExample`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Convert_patterns_to_skills → SkillExample`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Convert_patterns_to_skills → _generate_skill_name`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Convert_patterns_to_skills → _generate_description`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Convert_patterns_to_skills → _determine_category`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Convert_patterns_to_skills → Get_id`",
+            "type": "intra_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Convert_patterns_to_skills → _generate_skill_name`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Convert_patterns_to_skills → _generate_description`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Convert_patterns_to_skills → _determine_category`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Convert_patterns_to_skills → Get_id`",
+            "type": "cross_community",
+            "steps": "4"
+          }
+        ]
+      },
+      {
+        "name": "miner",
+        "stats": "19 symbols | 3 files | Cohesion: 71%",
+        "entry_points": [
+          {
+            "name": "mine_patterns",
+            "type": "Function",
+            "file": "templates/scripts/python/miner/pattern_miner.py",
+            "line": 29
+          },
+          {
+            "name": "mine_patterns",
+            "type": "Function",
+            "file": "scripts/python/miner/pattern_miner.py",
+            "line": 29
+          },
+          {
+            "name": "CodePattern",
+            "type": "Class",
+            "file": "scripts/python/parser/base.py",
+            "line": 50
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "templates/scripts/python/miner/pattern_miner.py",
+            "symbols": "mine_patterns, _mine_inheritance_patterns, _mine_decorator_patterns, _mine_naming_patterns, _mine_structure_patterns (+4)"
+          },
+          {
+            "file": "scripts/python/miner/pattern_miner.py",
+            "symbols": "mine_patterns, _mine_inheritance_patterns, _mine_decorator_patterns, _mine_naming_patterns, _mine_structure_patterns (+4)"
+          },
+          {
+            "file": "scripts/python/parser/base.py",
+            "symbols": "CodePattern"
+          }
+        ],
+        "connected_areas": [],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Cmd_analyze → CodePattern`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Cmd_analyze → CodePattern`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Mine_patterns → CodePattern`",
+            "type": "intra_community",
+            "steps": "3"
+          }
+        ]
+      },
+      {
+        "name": "parser",
+        "stats": "29 symbols | 4 files | Cohesion: 100%",
+        "entry_points": [
+          {
+            "name": "parse_file",
+            "type": "Function",
+            "file": "scripts/python/parser/python_parser.py",
+            "line": 21
+          },
+          {
+            "name": "hash_code",
+            "type": "Function",
+            "file": "scripts/python/parser/base.py",
+            "line": 186
+          },
+          {
+            "name": "parse_file",
+            "type": "Function",
+            "file": "templates/scripts/python/parser/python_parser.py",
+            "line": 21
+          },
+          {
+            "name": "hash_code",
+            "type": "Function",
+            "file": "templates/scripts/python/parser/base.py",
+            "line": 186
+          },
+          {
+            "name": "parse_file",
+            "type": "Function",
+            "file": "templates/scripts/python/parser/base.py",
+            "line": 104
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "templates/scripts/python/parser/python_parser.py",
+            "symbols": "parse_file, _parse_class, _parse_function, _get_decorator_name, _get_attribute_name (+6)"
+          },
+          {
+            "file": "scripts/python/parser/python_parser.py",
+            "symbols": "parse_file, _parse_class, _parse_function, _get_decorator_name, _get_attribute_name (+5)"
+          },
+          {
+            "file": "templates/scripts/python/parser/base.py",
+            "symbols": "CodeUnit, hash_code, parse_file, get_file_extensions, parse_directory (+1)"
+          },
+          {
+            "file": "scripts/python/parser/base.py",
+            "symbols": "CodeUnit, hash_code"
+          }
+        ],
+        "connected_areas": [],
+        "execution_flows": []
+      },
+      {
+        "name": "python",
+        "stats": "6 symbols | 3 files | Cohesion: 74%",
+        "entry_points": [
+          {
+            "name": "cmd_project_context",
+            "type": "Function",
+            "file": "scripts/python/main.py",
+            "line": 142
+          },
+          {
+            "name": "main",
+            "type": "Function",
+            "file": "scripts/python/main.py",
+            "line": 318
+          },
+          {
+            "name": "cmd_project_context",
+            "type": "Function",
+            "file": "templates/scripts/python/main.py",
+            "line": 142
+          },
+          {
+            "name": "generate",
+            "type": "Function",
+            "file": "scripts/python/generator/project_context_generator.py",
+            "line": 133
+          },
+          {
+            "name": "generate_project_context",
+            "type": "Function",
+            "file": "scripts/python/generator/project_context_generator.py",
+            "line": 1302
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "scripts/python/generator/project_context_generator.py",
+            "symbols": "ProjectContextGenerator, generate, generate_project_context"
+          },
+          {
+            "file": "scripts/python/main.py",
+            "symbols": "cmd_project_context, main"
+          },
+          {
+            "file": "templates/scripts/python/main.py",
+            "symbols": "cmd_project_context"
+          }
+        ],
+        "connected_areas": [
+          {
+            "area": "Area",
+            "connections": "Connections"
+          },
+          {
+            "area": "Analyzer",
+            "connections": "3 calls"
+          },
+          {
+            "area": "Scripts",
+            "connections": "1 calls"
+          }
+        ],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Main → Get_file_extensions`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → Parse_file`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → _detect_service_name`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → Ensure_private_dir`",
+            "type": "cross_community",
+            "steps": "3"
+          },
+          {
+            "flow": "`Main → Default_output_dir`",
+            "type": "cross_community",
+            "steps": "3"
+          },
+          {
+            "flow": "`Main → PythonParser`",
+            "type": "cross_community",
+            "steps": "3"
+          },
+          {
+            "flow": "`Main → PatternMiner`",
+            "type": "cross_community",
+            "steps": "3"
+          },
+          {
+            "flow": "`Main → ProjectContextGenerator`",
+            "type": "intra_community",
+            "steps": "3"
+          },
+          {
+            "flow": "`Main → Generate`",
+            "type": "intra_community",
+            "steps": "3"
+          },
+          {
+            "flow": "`Main → ApiParameter`",
+            "type": "cross_community",
+            "steps": "3"
+          }
+        ]
+      },
+      {
+        "name": "scripts",
+        "stats": "114 symbols | 11 files | Cohesion: 69%",
+        "entry_points": [
+          {
+            "name": "test_load_from_empty_dir",
+            "type": "Function",
+            "file": "ecc-components/skills/continuous-learning-v2/scripts/test_parse_instinct.py",
+            "line": 406
+          },
+          {
+            "name": "test_load_from_nonexistent_dir",
+            "type": "Function",
+            "file": "ecc-components/skills/continuous-learning-v2/scripts/test_parse_instinct.py",
+            "line": 411
+          },
+          {
+            "name": "test_load_annotates_metadata",
+            "type": "Function",
+            "file": "ecc-components/skills/continuous-learning-v2/scripts/test_parse_instinct.py",
+            "line": 416
+          },
+          {
+            "name": "test_load_defaults_scope_from_label",
+            "type": "Function",
+            "file": "ecc-components/skills/continuous-learning-v2/scripts/test_parse_instinct.py",
+            "line": 428
+          },
+          {
+            "name": "test_load_preserves_explicit_scope",
+            "type": "Function",
+            "file": "ecc-components/skills/continuous-learning-v2/scripts/test_parse_instinct.py",
+            "line": 445
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "ecc-components/skills/continuous-learning-v2/scripts/test_parse_instinct.py",
+            "symbols": "test_load_from_empty_dir, test_load_from_nonexistent_dir, test_load_annotates_metadata, test_load_defaults_scope_from_label, test_load_preserves_explicit_scope (+53)"
+          },
+          {
+            "file": "ecc-components/skills/continuous-learning-v2/scripts/instinct-cli.py",
+            "symbols": "_load_instincts_from_dir, parse_instinct_file, _validate_file_path, detect_project, _update_registry (+23)"
+          },
+          {
+            "file": "ecc-components/skills/videodb/scripts/ws_listener.py",
+            "symbols": "log, append_event, write_pid, cleanup_pid, is_fatal_error (+7)"
+          },
+          {
+            "file": "ecc-components/skills/skill-comply/scripts/runner.py",
+            "symbols": "ScenarioRun, run_scenario, _safe_sandbox_dir, _setup_sandbox, _parse_stream_json"
+          },
+          {
+            "file": "ecc-components/skills/skill-comply/scripts/report.py",
+            "symbols": "generate_report, _overall_compliance, _step_compliance_rate, _steps_to_promote"
+          },
+          {
+            "file": "ecc-components/skills/skill-comply/scripts/scenario_generator.py",
+            "symbols": "Scenario, generate_scenarios"
+          },
+          {
+            "file": "ecc-components/skills/skill-comply/scripts/parser.py",
+            "symbols": "ObservationEvent"
+          },
+          {
+            "file": "ecc-components/skills/skill-comply/scripts/utils.py",
+            "symbols": "extract_yaml"
+          },
+          {
+            "file": "ecc-components/skills/skill-comply/scripts/spec_generator.py",
+            "symbols": "generate_spec"
+          },
+          {
+            "file": "ecc-components/skills/skill-comply/scripts/run.py",
+            "symbols": "main"
+          }
+        ],
+        "connected_areas": [
+          {
+            "area": "Area",
+            "connections": "Connections"
+          },
+          {
+            "area": "Analyzer",
+            "connections": "3 calls"
+          },
+          {
+            "area": "Tests",
+            "connections": "2 calls"
+          },
+          {
+            "area": "Python",
+            "connections": "1 calls"
+          },
+          {
+            "area": "Specify_cli",
+            "connections": "1 calls"
+          }
+        ],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Cmd_promote → Parse_instinct_file`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Main → Parse_instinct_file`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Cmd_export → Parse_instinct_file`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Cmd_evolve → Parse_instinct_file`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Main → _update_registry`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → _collect_pending_dirs`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → _parse_created_date`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → _maybe_refresh`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → Step`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → Detector`",
+            "type": "cross_community",
+            "steps": "4"
+          }
+        ]
+      },
+      {
+        "name": "shell",
+        "stats": "12 symbols | 4 files | Cohesion: 79%",
+        "entry_points": [
+          {
+            "name": "analyze_project",
+            "type": "Function",
+            "file": "scripts/shell/skill_main.py",
+            "line": 21
+          },
+          {
+            "name": "generate_skills",
+            "type": "Function",
+            "file": "scripts/shell/skill_main.py",
+            "line": 56
+          },
+          {
+            "name": "run_all",
+            "type": "Function",
+            "file": "scripts/shell/skill_main.py",
+            "line": 86
+          },
+          {
+            "name": "main",
+            "type": "Function",
+            "file": "scripts/shell/skill_main.py",
+            "line": 153
+          },
+          {
+            "name": "analyze_project",
+            "type": "Function",
+            "file": "templates/scripts/shell/skill_main.py",
+            "line": 21
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "scripts/shell/skill_main.py",
+            "symbols": "analyze_project, generate_skills, run_all, main"
+          },
+          {
+            "file": "templates/scripts/shell/skill_main.py",
+            "symbols": "analyze_project, generate_skills, run_all, main"
+          },
+          {
+            "file": "scripts/shell/extractor/fusion.py",
+            "symbols": "to_dict, save, ShellKnowledgeBaseFusion"
+          },
+          {
+            "file": "scripts/shell/generator/skill_generator.py",
+            "symbols": "ShellSkillGenerator"
+          }
+        ],
+        "connected_areas": [
+          {
+            "area": "Area",
+            "connections": "Connections"
+          },
+          {
+            "area": "Extractor",
+            "connections": "4 calls"
+          },
+          {
+            "area": "Generator",
+            "connections": "4 calls"
+          },
+          {
+            "area": "Scripts",
+            "connections": "2 calls"
+          }
+        ],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Main → ShellKnowledgeBase`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellFunctionExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellVariableExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellCommentExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → To_dict`",
+            "type": "intra_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellProjectPatterns`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellKnowledgeBase`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellFunctionExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellVariableExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → ShellCommentExtractor`",
+            "type": "cross_community",
+            "steps": "4"
+          }
+        ]
+      },
+      {
+        "name": "specify-cli",
+        "stats": "34 symbols | 1 files | Cohesion: 90%",
+        "entry_points": [
+          {
+            "name": "attach_refresh",
+            "type": "Function",
+            "file": "src/specify_cli/__init__.py",
+            "line": 254
+          },
+          {
+            "name": "add",
+            "type": "Function",
+            "file": "src/specify_cli/__init__.py",
+            "line": 257
+          },
+          {
+            "name": "start",
+            "type": "Function",
+            "file": "src/specify_cli/__init__.py",
+            "line": 262
+          },
+          {
+            "name": "complete",
+            "type": "Function",
+            "file": "src/specify_cli/__init__.py",
+            "line": 265
+          },
+          {
+            "name": "error",
+            "type": "Function",
+            "file": "src/specify_cli/__init__.py",
+            "line": 268
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "src/specify_cli/__init__.py",
+            "symbols": "StepTracker, attach_refresh, add, start, complete (+29)"
+          }
+        ],
+        "connected_areas": [],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Init → _maybe_refresh`",
+            "type": "intra_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Check → _maybe_refresh`",
+            "type": "intra_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Init → Create_selection_panel`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Init → Get_key`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → _maybe_refresh`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Download_and_extract_template → _maybe_refresh`",
+            "type": "intra_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Download_and_extract_template → _github_token`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Download_and_extract_template → _parse_rate_limit_headers`",
+            "type": "cross_community",
+            "steps": "4"
+          }
+        ]
+      },
+      {
+        "name": "tests",
+        "stats": "101 symbols | 14 files | Cohesion: 87%",
+        "entry_points": [
+          {
+            "name": "analyze_project",
+            "type": "Function",
+            "file": "scripts/python/skill_main.py",
+            "line": 24
+          },
+          {
+            "name": "analyze_project",
+            "type": "Function",
+            "file": "templates/scripts/python/skill_main.py",
+            "line": 24
+          },
+          {
+            "name": "test_analyze_project",
+            "type": "Function",
+            "file": "scripts/python/tests/test_knowledge_base.py",
+            "line": 118
+          },
+          {
+            "name": "test_extract_classes",
+            "type": "Function",
+            "file": "scripts/python/tests/test_knowledge_base.py",
+            "line": 127
+          },
+          {
+            "name": "test_extract_functions",
+            "type": "Function",
+            "file": "scripts/python/tests/test_knowledge_base.py",
+            "line": 139
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "ecc-components/skills/skill-comply/tests/test_grader.py",
+            "symbols": "test_returns_compliance_result, test_full_compliance, test_all_required_steps_detected, test_optional_step_detected, test_no_hook_promotion_recommended (+12)"
+          },
+          {
+            "file": "scripts/python/tests/test_generators.py",
+            "symbols": "setUp, create_test_files, create_project_structure, test_django_detection, test_generate_all_windsurf (+7)"
+          },
+          {
+            "file": "templates/scripts/python/tests/test_generators.py",
+            "symbols": "setUp, create_test_files, create_project_structure, test_django_detection, test_generate_all_windsurf (+7)"
+          },
+          {
+            "file": "ecc-components/skills/skill-comply/tests/test_parser.py",
+            "symbols": "test_parses_tdd_spec, test_step_fields, test_optional_detector_fields, test_scoring_threshold, test_required_vs_optional_steps (+6)"
+          },
+          {
+            "file": "scripts/python/tests/test_knowledge_base.py",
+            "symbols": "test_analyze_project, test_extract_classes, test_extract_functions, test_extract_constants, test_django_model_extraction (+3)"
+          },
+          {
+            "file": "templates/scripts/python/tests/test_knowledge_base.py",
+            "symbols": "test_analyze_project, test_extract_classes, test_extract_functions, test_extract_constants, test_django_model_extraction (+3)"
+          },
+          {
+            "file": "scripts/python/extractor/libcst/knowledge_base.py",
+            "symbols": "KnowledgeBaseFusion, analyze_project, _collect_python_files, _should_exclude, _analyze_patterns (+3)"
+          },
+          {
+            "file": "scripts/python/generator/windsurf_generator.py",
+            "symbols": "AgentRulesGenerator, generate_all, generate_rules_md, generate_constitution, _write_file (+2)"
+          },
+          {
+            "file": "ecc-components/skills/skill-comply/scripts/parser.py",
+            "symbols": "Detector, Step, ComplianceSpec, parse_spec, parse_trace"
+          },
+          {
+            "file": "ecc-components/skills/skill-comply/scripts/grader.py",
+            "symbols": "StepResult, ComplianceResult, _check_temporal_order, grade"
+          }
+        ],
+        "connected_areas": [
+          {
+            "area": "Area",
+            "connections": "Connections"
+          },
+          {
+            "area": "Libcst",
+            "connections": "3 calls"
+          },
+          {
+            "area": "Scripts",
+            "connections": "1 calls"
+          }
+        ],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Run_all → Get_bases`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_decorators`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_docstring`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_node_source`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_bases`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_decorators`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_docstring`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Run_all → Get_node_source`",
+            "type": "cross_community",
+            "steps": "6"
+          },
+          {
+            "flow": "`Main → _should_exclude`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Main → _get_file_hash`",
+            "type": "cross_community",
+            "steps": "5"
+          }
+        ]
+      },
+      {
+        "name": "validator",
+        "stats": "60 symbols | 6 files | Cohesion: 90%",
+        "entry_points": [
+          {
+            "name": "add_error",
+            "type": "Function",
+            "file": "scripts/python/validator/skill_validator.py",
+            "line": 40
+          },
+          {
+            "name": "add_warning",
+            "type": "Function",
+            "file": "scripts/python/validator/skill_validator.py",
+            "line": 50
+          },
+          {
+            "name": "add_info",
+            "type": "Function",
+            "file": "scripts/python/validator/skill_validator.py",
+            "line": 59
+          },
+          {
+            "name": "merge",
+            "type": "Function",
+            "file": "scripts/python/validator/skill_validator.py",
+            "line": 75
+          },
+          {
+            "name": "validate_skill_file",
+            "type": "Function",
+            "file": "scripts/python/validator/skill_validator.py",
+            "line": 134
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "scripts/python/validator/skill_validator.py",
+            "symbols": "ValidationIssue, ValidationResult, add_error, add_warning, add_info (+12)"
+          },
+          {
+            "file": "templates/scripts/python/validator/skill_validator.py",
+            "symbols": "ValidationIssue, ValidationResult, add_error, add_warning, add_info (+12)"
+          },
+          {
+            "file": "scripts/python/validator/conflict_detector.py",
+            "symbols": "ConflictItem, ConflictReport, detect_conflicts, _load_skills, _parse_skill (+5)"
+          },
+          {
+            "file": "templates/scripts/python/validator/conflict_detector.py",
+            "symbols": "ConflictItem, ConflictReport, detect_conflicts, _load_skills, _parse_skill (+5)"
+          },
+          {
+            "file": "scripts/python/skill_main.py",
+            "symbols": "generate_skills, validate_skills, main"
+          },
+          {
+            "file": "templates/scripts/python/skill_main.py",
+            "symbols": "generate_skills, validate_skills, main"
+          }
+        ],
+        "connected_areas": [
+          {
+            "area": "Area",
+            "connections": "Connections"
+          },
+          {
+            "area": "Tests",
+            "connections": "6 calls"
+          },
+          {
+            "area": "Scripts",
+            "connections": "2 calls"
+          }
+        ],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Main → _should_exclude`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Main → _get_file_hash`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Main → ExtractorResult`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Main → _should_exclude`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Main → _get_file_hash`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Main → ExtractorResult`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Main → KnowledgeBase`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → KnowledgeBase`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Main → Ensure_private_dir`",
+            "type": "cross_community",
+            "steps": "3"
+          },
+          {
+            "flow": "`Main → Default_output_dir`",
+            "type": "cross_community",
+            "steps": "3"
+          }
+        ]
+      }
+    ]
+  },
+  "doc_facts": {
+    "readme_summary": ""
+  }
+}

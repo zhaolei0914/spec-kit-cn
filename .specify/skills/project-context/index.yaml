@@ -1,0 +1,127 @@
+# 项目上下文 Skill 索引
+# 项目: specify-cn-cli
+# 生成时间: 2026-04-02T13:24:32.635082
+# 生成器: GitNexus 知识图谱 + 项目扫描器
+
+skills:
+  - id: project-context/SKILL
+    file: SKILL.md
+    description: 项目全局上下文（技术栈、结构、方案、规范、环境）
+  - id: project-context/analyzer
+    file: analyzer.md
+    description: Analyzer 模块详情
+    dependencies: ['project-context/miner', 'project-context/generator']
+  - id: project-context/django
+    file: django.md
+    description: Django 模块详情
+    dependencies: ['project-context/libcst']
+  - id: project-context/extractor
+    file: extractor.md
+    description: Extractor 模块详情
+  - id: project-context/generator
+    file: generator.md
+    description: Generator 模块详情
+    dependencies: ['project-context/analyzer']
+  - id: project-context/gitnexus
+    file: gitnexus.md
+    description: Gitnexus 模块详情
+    dependencies: ['project-context/scripts']
+  - id: project-context/libcst
+    file: libcst.md
+    description: Libcst 模块详情
+    dependencies: ['project-context/django']
+  - id: project-context/mcp
+    file: mcp.md
+    description: Mcp 模块详情
+  - id: project-context/miner
+    file: miner.md
+    description: Miner 模块详情
+  - id: project-context/parser
+    file: parser.md
+    description: Parser 模块详情
+  - id: project-context/python
+    file: python.md
+    description: Python 模块详情
+    dependencies: ['project-context/analyzer', 'project-context/scripts']
+  - id: project-context/scripts
+    file: scripts.md
+    description: Scripts 模块详情
+    dependencies: ['project-context/analyzer', 'project-context/tests', 'project-context/python']
+  - id: project-context/shell
+    file: shell.md
+    description: Shell 模块详情
+    dependencies: ['project-context/extractor', 'project-context/generator', 'project-context/scripts']
+  - id: project-context/specify-cli
+    file: specify-cli.md
+    description: Specify-Cli 模块详情
+  - id: project-context/tests
+    file: tests.md
+    description: Tests 模块详情
+    dependencies: ['project-context/libcst', 'project-context/scripts']
+  - id: project-context/validator
+    file: validator.md
+    description: Validator 模块详情
+    dependencies: ['project-context/tests', 'project-context/scripts']
+
+# 上下文维度映射
+context_dimensions:
+  技术栈: SKILL.md#一技术栈上下文用什么技术
+  项目结构: SKILL.md#二项目结构上下文代码怎么组织
+  技术方案: SKILL.md#三技术方案上下文业务怎么实现
+  开发规范: SKILL.md#四开发规范上下文代码怎么写才合规
+  环境配置: SKILL.md#五环境与配置上下文运行依赖什么
+
+# 触发词映射
+triggers:
+  SKILL.md:
+    - 项目
+    - 概述
+    - 结构
+    - 技术栈
+    - 规范
+    - 上下文
+  analyzer.md:
+    - analyzer
+    - Analyzer
+  django.md:
+    - django
+    - Django
+  extractor.md:
+    - extractor
+    - Extractor
+  generator.md:
+    - generator
+    - Generator
+  gitnexus.md:
+    - gitnexus
+    - Gitnexus
+  libcst.md:
+    - libcst
+    - Libcst
+  mcp.md:
+    - mcp
+    - Mcp
+  miner.md:
+    - miner
+    - Miner
+  parser.md:
+    - parser
+    - Parser
+  python.md:
+    - python
+    - Python
+  scripts.md:
+    - scripts
+    - Scripts
+  shell.md:
+    - shell
+    - Shell
+  specify-cli.md:
+    - specify-cli
+    - Specify_cli
+  tests.md:
+    - tests
+    - Tests
+  validator.md:
+    - validator
+    - Validator

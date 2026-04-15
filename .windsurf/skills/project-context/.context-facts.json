@@ -1,0 +1,301 @@
+{
+  "generated_at": "2026-04-10T06:45:06.084945",
+  "project_name": "specify-cn-cli",
+  "project_facts": {
+    "languages": {
+      "Shell/Bash": 12,
+      "PowerShell": 5,
+      "Python": 1
+    },
+    "frameworks": [],
+    "middleware": [],
+    "build_tools": [
+      "Python",
+      "Hatch",
+      "pip"
+    ],
+    "ci_cd": [
+      "GitHub Actions"
+    ],
+    "containerization": [],
+    "versions": {
+      "python": ">=3.11",
+      "node": null,
+      "java": null,
+      "go": null,
+      "project": "0.0.90"
+    }
+  },
+  "structure_facts": {
+    "dir_structure": {
+      "AGENTS.md": {
+        "type": "file",
+        "size": 19819
+      },
+      "CHANGELOG.md": {
+        "type": "file",
+        "size": 17264
+      },
+      "CLAUDE.md": {
+        "type": "file",
+        "size": 18707
+      },
+      "CODE_OF_CONDUCT.md": {
+        "type": "file",
+        "size": 2382
+      },
+      "CONTRIBUTING.md": {
+        "type": "file",
+        "size": 6579
+      },
+      "LICENSE": {
+        "type": "file",
+        "size": 1060
+      },
+      "README.md": {
+        "type": "file",
+        "size": 34578
+      },
+      "SECURITY.md": {
+        "type": "file",
+        "size": 1454
+      },
+      "SUPPORT.md": {
+        "type": "file",
+        "size": 919
+      },
+      "TERMINOLOGY.md": {
+        "type": "file",
+        "size": 13696
+      },
+      "TRANSLATION_STANDARDS.md": {
+        "type": "file",
+        "size": 8213
+      },
+      "docs": {
+        "type": "dir",
+        "files": 9
+      },
+      "media": {
+        "type": "dir",
+        "files": 5
+      },
+      "memory": {
+        "type": "dir",
+        "files": 1
+      },
+      "pyproject.toml": {
+        "type": "file",
+        "size": 569
+      },
+      "scripts": {
+        "type": "dir",
+        "files": 10
+      },
+      "spec-driven.md": {
+        "type": "file",
+        "size": 20283
+      },
+      "src": {
+        "type": "dir",
+        "files": 1
+      },
+      "templates": {
+        "type": "dir",
+        "files": 15
+      }
+    },
+    "total_files": 67,
+    "config_files": [
+      "pyproject.toml"
+    ],
+    "env_files": [],
+    "architecture_hints": [
+      "CLI 工具 / 库"
+    ]
+  },
+  "code_patterns": {
+    "naming": {
+      "function_style": "snake_case",
+      "class_style": "PascalCase",
+      "file_style": "kebab-case",
+      "function_examples": [
+        "get_key",
+        "select_with_arrows",
+        "show_banner",
+        "callback",
+        "run_command",
+        "check_tool",
+        "rewrite_paths",
+        "generate_commands",
+        "generate_copilot_prompts",
+        "build_variant"
+      ],
+      "class_examples": [
+        "StepTracker",
+        "BannerGroup"
+      ]
+    },
+    "indentation": {
+      "style": "4-spaces",
+      "detail": "4 空格缩进"
+    },
+    "docstring_style": {
+      "style": "Google",
+      "all_styles": {
+        "Google": 1
+      }
+    },
+    "import_style": {
+      "style": "绝对导入为主",
+      "grouped": false,
+      "absolute": 25,
+      "relative": 0,
+      "wildcard": 0
+    },
+    "anti_patterns": [],
+    "architecture_hints": [
+      "CLI 工具 / 库"
+    ],
+    "logging_style": {
+      "primary": "console.*()",
+      "all": {
+        "console.*()": 1,
+        "print()": 1
+      }
+    },
+    "error_handling": {
+      "try/except": 4,
+      "raise": 5
+    },
+    "env_vars_in_code": [
+      "AGENTS",
+      "GH_TOKEN",
+      "GITHUB_TOKEN",
+      "SCRIPTS",
+      "SPECIFY_FEATURE",
+      "exit_code"
+    ],
+    "sample_count": 13
+  },
+  "code_graph": {
+    "meta": {
+      "files": 43,
+      "nodes": 655,
+      "edges": 768,
+      "communities": 8,
+      "processes": 11,
+      "embeddings": 0
+    },
+    "module_count": 1,
+    "modules": [
+      {
+        "name": "specify-cli",
+        "stats": "34 symbols | 1 files | Cohesion: 68%",
+        "entry_points": [
+          {
+            "name": "attach_refresh",
+            "type": "Function",
+            "file": "src/specify_cli/__init__.py",
+            "line": 254
+          },
+          {
+            "name": "add",
+            "type": "Function",
+            "file": "src/specify_cli/__init__.py",
+            "line": 257
+          },
+          {
+            "name": "is_git_repo",
+            "type": "Function",
+            "file": "src/specify_cli/__init__.py",
+            "line": 514
+          },
+          {
+            "name": "init_git_repo",
+            "type": "Function",
+            "file": "src/specify_cli/__init__.py",
+            "line": 534
+          },
+          {
+            "name": "ensure_executable_scripts",
+            "type": "Function",
+            "file": "src/specify_cli/__init__.py",
+            "line": 900
+          }
+        ],
+        "key_files": [
+          {
+            "file": "File",
+            "symbols": "Symbols"
+          },
+          {
+            "file": "src/specify_cli/__init__.py",
+            "symbols": "attach_refresh, add, _maybe_refresh, is_git_repo, init_git_repo (+29)"
+          }
+        ],
+        "connected_areas": [],
+        "execution_flows": [
+          {
+            "flow": "Flow",
+            "type": "Type",
+            "steps": "Steps"
+          },
+          {
+            "flow": "`Init → _maybe_refresh`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Check → _maybe_refresh`",
+            "type": "cross_community",
+            "steps": "5"
+          },
+          {
+            "flow": "`Init → Create_selection_panel`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Init → Get_key`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Download_and_extract_template → _maybe_refresh`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Download_and_extract_template → _github_token`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Download_and_extract_template → _parse_rate_limit_headers`",
+            "type": "cross_community",
+            "steps": "4"
+          },
+          {
+            "flow": "`Version → _github_token`",
+            "type": "intra_community",
+            "steps": "3"
+          },
+          {
+            "flow": "`Handle_vscode_settings → Deep_merge`",
+            "type": "intra_community",
+            "steps": "3"
+          },
+          {
+            "flow": "`Ensure_executable_scripts → _maybe_refresh`",
+            "type": "intra_community",
+            "steps": "3"
+          }
+        ]
+      }
+    ]
+  },
+  "doc_facts": {
+    "readme_summary": "<div align=\"center\"> <img src=\"./media/logo_small.webp\" alt=\"Spec Kit Logo\"/> <h1>🌱 Spec Kit CN</h1> <h3><em>更快地构建高质量软件. </em></h3> </div>"
+  }
+}

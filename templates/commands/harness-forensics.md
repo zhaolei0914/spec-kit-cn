@@ -80,7 +80,7 @@ $ARGUMENTS: 需求 ID 或 "latest"
 
 #### 步骤 5: 更新 Harness (如适用)
 
-将验证通过的改进建议应用到命令模板或配置，记录到 `templates/commands/CHANGELOG.md`
+将验证通过的改进建议应用到命令模板或配置，记录到 `.specify/templates/commands/CHANGELOG.md`
 
 #### 步骤 N: Harness 收尾
 

@@ -33,7 +33,7 @@ $ARGUMENTS: `<REQ-ID> <tag名称|--latest>`
 
 #### 步骤 3: 执行恢复
 
-运行 `PATH="/usr/local/bin:/usr/bin:/bin:$PATH" bash scripts/harness/restore.sh <REQ-ID> <tag>`:
+运行 `PATH="/usr/local/bin:/usr/bin:/bin:$PATH" bash .specify/scripts/harness/restore.sh <REQ-ID> <tag>`:
 - 自动 stash 当前修改
 - 从检查点恢复 `specs/[REQ-ID]/` 目录
 

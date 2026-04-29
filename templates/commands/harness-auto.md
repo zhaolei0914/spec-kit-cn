@@ -38,12 +38,12 @@ description: "全自动需求交付引擎: 提交需求 → 自动完成全流�
 
 1. 读取 `.specify/harness/config.yml` → 加载编排配置
 2. **检查项目上下文是否已就绪**:
-   - 检查 `__AGENT_SKILLS_DIR__/project-context/SKILL.md` 是否存在
+   - 检查 `.windsurf/skills/project-context/SKILL.md` 是否存在
    - ❌ 不存在 → **停止初始化**，提示用户必须先执行项目上下文初始化：
      ```
      ⚠️ 项目上下文未初始化
 
-     检测到 `__AGENT_SKILLS_DIR__/project-context/SKILL.md` 不存在。
+     检测到 `.windsurf/skills/project-context/SKILL.md` 不存在。
 
      请先执行以下命令完成项目上下文初始化：
        /0-制定项目上下文
@@ -92,15 +92,15 @@ description: "全自动需求交付引擎: 提交需求 → 自动完成全流�
 
 | 阶段 | Subagent | 命令模板文件 |
 |------|----------|-------------|
-| /2-需求规范 | `sdd-ba` | `__AGENT_CONFIG_DIR__/commands/2-需求规范.md` |
-| /3-开发设计 | `sdd-architect` | `__AGENT_CONFIG_DIR__/commands/3-开发设计.md` |
-| /4-实施步骤 | `sdd-architect` | `__AGENT_CONFIG_DIR__/commands/4-实施步骤.md` |
-| /5-实施前检测 | `sdd-architect` | `__AGENT_CONFIG_DIR__/commands/5-实施前检测.md` |
-| /6-编写代码 | `sdd-developer` | `__AGENT_CONFIG_DIR__/commands/6-编写代码.md` |
-| /8-生成测试用例 | `sdd-qa` | `__AGENT_CONFIG_DIR__/commands/8-生成测试用例.md` |
-| /9-测试验证 | `sdd-qa` | `__AGENT_CONFIG_DIR__/commands/9-测试验证.md` |
-| /10-同步文档 | `sdd-docops` | `__AGENT_CONFIG_DIR__/commands/10-同步文档.md` |
-| /11-归档需求 | `sdd-docops` | `__AGENT_CONFIG_DIR__/commands/11-归档需求.md` |
+| /2-需求规范 | `sdd-ba` | `.windsurf//commands/2-需求规范.md` |
+| /3-开发设计 | `sdd-architect` | `.windsurf//commands/3-开发设计.md` |
+| /4-实施步骤 | `sdd-architect` | `.windsurf//commands/4-实施步骤.md` |
+| /5-实施前检测 | `sdd-architect` | `.windsurf//commands/5-实施前检测.md` |
+| /6-编写代码 | `sdd-developer` | `.windsurf//commands/6-编写代码.md` |
+| /8-生成测试用例 | `sdd-qa` | `.windsurf//commands/8-生成测试用例.md` |
+| /9-测试验证 | `sdd-qa` | `.windsurf//commands/9-测试验证.md` |
+| /10-同步文档 | `sdd-docops` | `.windsurf//commands/10-同步文档.md` |
+| /11-归档需求 | `sdd-docops` | `.windsurf//commands/11-归档需求.md` |
 
 对每个阶段 P，依次执行以下 5 步:
 
@@ -150,9 +150,9 @@ description: "全自动需求交付引擎: 提交需求 → 自动完成全流�
 
 | 阶段 | 必需文件 | 禁止加载 |
 |------|----------|----------|
-| /1-需求分析 | SKILL.md, memory/index.md | 完整代码库, 其他需求文档 |
+| /1-需求分析 | SKILL.md, .specify/memory/index.md | 完整代码库, 其他需求文档 |
 | /2-需求规范 | requirement.md | 完整 SKILL.md, 代码库 |
-| /3-开发设计 | requirement.md, spec.md | 完整 memory/, 代码库 |
+| /3-开发设计 | requirement.md, spec.md | 完整 .specify/memory/, 代码库 |
 | /4-实施步骤 | spec.md, design.md | 完整需求文档 |
 | /5-实施前检测 | design.md, tasks.md | 完整规范文档 |
 | /6-编写代码 | design.md, tasks.md | 完整需求分析 |

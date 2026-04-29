@@ -275,6 +275,12 @@ build_variant() {
   rules_file=$(agent_rules_file "$agent")
   config_dir=$(agent_config_dir "$agent")
 
+  if [[ -d templates/skills ]]; then
+    mkdir -p "$base_dir/$skills_dir"
+    cp -r templates/skills/* "$base_dir/$skills_dir/"
+    echo "Copied templates/skills -> $skills_dir"
+  fi
+
   find "$SPEC_DIR/templates" -type f -name "*.md" 2>/dev/null | while read -r tpl_file; do
     sed -i \
       -e "s|__AGENT__|$agent|g" \
@@ -416,22 +422,22 @@ build_variant() {
       generate_commands windsurf md "\$ARGUMENTS" "$base_dir/.windsurf/workflows" "$script"
 
       # Copy ECC components for Windsurf
-      if [[ -d ecc-components/commands ]]; then
-        cp ecc-components/commands/*.md "$base_dir/.windsurf/workflows/"
-        echo "Copied ECC commands -> .windsurf/workflows"
-      fi
+      # if [[ -d ecc-components/commands ]]; then
+      #   cp ecc-components/commands/*.md "$base_dir/.windsurf/workflows/"
+      #   echo "Copied ECC commands -> .windsurf/workflows"
+      # fi
 
-      if [[ -d ecc-components/skills ]]; then
-        mkdir -p "$base_dir/.windsurf/skills"
-        cp -r ecc-components/skills/* "$base_dir/.windsurf/skills/"
-        echo "Copied ECC skills -> .windsurf/skills"
-      fi
+      # if [[ -d ecc-components/skills ]]; then
+      #   mkdir -p "$base_dir/.windsurf/skills"
+      #   cp -r ecc-components/skills/* "$base_dir/.windsurf/skills/"
+      #   echo "Copied ECC skills -> .windsurf/skills"
+      # fi
 
-      if [[ -d ecc-components/rules ]]; then
-        mkdir -p "$base_dir/.windsurf/rules"
-        cp -r ecc-components/rules/* "$base_dir/.windsurf/rules/"
-        echo "Copied ECC rules -> .windsurf/rules"
-      fi
+      # if [[ -d ecc-components/rules ]]; then
+      #   mkdir -p "$base_dir/.windsurf/rules"
+      #   cp -r ecc-components/rules/* "$base_dir/.windsurf/rules/"
+      #   echo "Copied ECC rules -> .windsurf/rules"
+      # fi
       ;;
 
     codex)

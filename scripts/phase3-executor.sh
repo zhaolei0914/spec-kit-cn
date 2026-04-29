@@ -4,9 +4,61 @@ set -e  # 任何命令失败立即退出
 echo "=== 阶段 3：初始化项目配置文件 ==="
 echo ""
 
+# 步骤 3.0：前置检查与文件复制（从阶段 1 步骤 5 移入）
+echo "▶ 步骤 3.0：前置检查与文件复制"
+
+# 检测 .specify/skills/ 下是否有项目 SKILL.md
+if [ -d ".specify/skills" ]; then
+  # 查找第一个 SKILL.md 文件
+  SKILL_SOURCE=$(find .specify/skills -name "SKILL.md" -type f | head -1)
+
+  if [ -n "$SKILL_SOURCE" ]; then
+    echo "  发现源文件: $SKILL_SOURCE"
+
+    # 创建目标目录
+    mkdir -p __AGENT_SKILLS_DIR__/project-context
+
+    # 复制 SKILL.md
+    cp "$SKILL_SOURCE" __AGENT_SKILLS_DIR__/project-context/SKILL.md
+    echo "  ✅ 已复制到 __AGENT_SKILLS_DIR__/project-context/SKILL.md"
+
+    # 修改 name 字段为 project-context
+    sed -i '1,10s/^name: .*/name: project-context/' __AGENT_SKILLS_DIR__/project-context/SKILL.md
+    echo "  ✅ 已修改 name 字段"
+
+    # 删除临时目录
+    rm -rf .specify/skills
+    echo "  ✅ 已清理临时目录"
+  else
+    echo "  ⚠️  .specify/skills/ 目录存在但未找到 SKILL.md，跳过复制"
+  fi
+else
+  echo "  ℹ️  .specify/skills/ 不存在，跳过复制（可能已在之前执行过）"
+fi
+
+# 验证 SKILL.md 是否存在
+if [ ! -f "__AGENT_SKILLS_DIR__/project-context/SKILL.md" ]; then
+  echo ""
+  echo "❌ 错误：SKILL.md 文件不存在"
+  echo "   期望位置: __AGENT_SKILLS_DIR__/project-context/SKILL.md"
+  echo ""
+  echo "可能原因："
+  echo "  1. 阶段 1 的 GitNexus 分析未成功生成 SKILL.md"
+  echo "  2. fetch_context.py 下载失败"
+  echo "  3. 文件已被手动删除"
+  echo ""
+  echo "解决方案："
+  echo "  请重新执行 /0-制定项目上下文1 命令的阶段 1"
+  exit 1
+fi
+
+echo "  ✅ 验证通过: SKILL.md 文件存在"
+echo "✅ 完成"
+echo ""
+
 # 步骤 3.1：创建目录结构
 echo "▶ 步骤 3.1：创建目录结构"
-mkdir -p specs/archived/ docs/ memory/summaries .specify/memory/summaries
+mkdir -p specs/archived/ docs/ .specify/memory/summaries
 echo "✅ 完成"
 echo ""
 

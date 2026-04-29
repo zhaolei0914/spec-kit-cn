@@ -94,6 +94,22 @@ agent_rules_file() {
   esac
 }
 
+agent_rules_dir() {
+  local agent=$1
+  case $agent in
+    claude)         echo ".claude/rules" ;;
+    windsurf)       echo ".windsurf/rules" ;;
+    cursor-agent)   echo ".cursor/rules" ;;
+    codex)          echo ".codex/rules" ;;
+    copilot)        echo ".github/rules" ;;
+    gemini)         echo ".gemini/rules" ;;
+    qwen)           echo ".qwen/rules" ;;
+    opencode)       echo ".opencode/rules" ;;
+    kilocode)       echo ".kilocode/rules" ;;
+    *)              echo ".specify/rules" ;;
+  esac
+}
+
 agent_config_dir() {
   local agent=$1
   case $agent in
@@ -270,15 +286,42 @@ build_variant() {
   [[ -d templates ]] && { mkdir -p "$SPEC_DIR/templates"; find templates -type f -not -path "templates/commands/*" -not -path "templates/harness/*" -not -path "templates/cursor-agents/*" -not -name "vscode-settings.json" -exec cp --parents {} "$SPEC_DIR"/ \; 2>/dev/null || true; echo "Copied templates -> .specify/templates"; }
 
   # Replace __AGENT_*__ placeholders in static template files (non-command templates)
-  local skills_dir rules_file config_dir
+  local skills_dir rules_file rules_dir config_dir
   skills_dir=$(agent_skills_dir "$agent")
   rules_file=$(agent_rules_file "$agent")
+  rules_dir=$(agent_rules_dir "$agent")
   config_dir=$(agent_config_dir "$agent")
 
   if [[ -d templates/skills ]]; then
     mkdir -p "$base_dir/$skills_dir"
     cp -r templates/skills/* "$base_dir/$skills_dir/"
     echo "Copied templates/skills -> $skills_dir"
+
+    # Replace __AGENT_*__ placeholders in copied skills
+    find "$base_dir/$skills_dir" -type f -name "*.md" 2>/dev/null | while read -r skill_file; do
+      sed -i \
+        -e "s|__AGENT__|$agent|g" \
+        -e "s|__AGENT_SKILLS_DIR__|$skills_dir|g" \
+        -e "s|__AGENT_RULES_FILE__|$rules_file|g" \
+        -e "s|__AGENT_CONFIG_DIR__|$config_dir|g" \
+        "$skill_file"
+    done
+  fi
+
+  if [[ -d templates/rules ]]; then
+    mkdir -p "$base_dir/$rules_dir"
+    cp -r templates/rules/* "$base_dir/$rules_dir/"
+    echo "Copied templates/rules -> $rules_dir"
+
+    # Replace __AGENT_*__ placeholders in copied rules
+    find "$base_dir/$rules_dir" -type f -name "*.md" 2>/dev/null | while read -r rule_file; do
+      sed -i \
+        -e "s|__AGENT__|$agent|g" \
+        -e "s|__AGENT_SKILLS_DIR__|$skills_dir|g" \
+        -e "s|__AGENT_RULES_FILE__|$rules_file|g" \
+        -e "s|__AGENT_CONFIG_DIR__|$config_dir|g" \
+        "$rule_file"
+    done
   fi
 
   find "$SPEC_DIR/templates" -type f -name "*.md" 2>/dev/null | while read -r tpl_file; do
@@ -288,6 +331,17 @@ build_variant() {
       -e "s|__AGENT_RULES_FILE__|$rules_file|g" \
       -e "s|__AGENT_CONFIG_DIR__|$config_dir|g" \
       "$tpl_file"
+  done
+
+  # Replace __AGENT_*__ placeholders in scripts
+  find "$SPEC_DIR/scripts" -type f \( -name "*.sh" -o -name "*.ps1" \) 2>/dev/null | while read -r script_file; do
+    sed -i \
+      -e "s|__AGENT__|$agent|g" \
+      -e "s|__AGENT_SKILLS_DIR__|$skills_dir|g" \
+      -e "s|__AGENT_RULES_FILE__|$rules_file|g" \
+      -e "s|__AGENT_CONFIG_DIR__|$config_dir|g" \
+      -e "s|__AGENT_TEMPLATES_DIR__|.specify/templates|g" \
+      "$script_file"
   done
 
   # Inject variant into plan-template.md within .specify/templates if present
